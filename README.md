@@ -8,4 +8,4 @@ my blog site: <http://www.webfishes.com/>
 
 ## Contact
 
-if you find any questions you can link me with [email](qqcome110@163.com)
+if you find any questiones please contact me with [email](qqcome110@163.com)
