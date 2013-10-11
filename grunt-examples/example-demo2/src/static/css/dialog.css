@@ -1,0 +1,24 @@
+/*这是弹框的样式*/
+.dialog {
+	width: 500px;
+	height: 300px;
+	background: #f2f2f2;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 8px #e1e1e1;
+	border-radius: 5px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -150px;
+	z-index: 999;
+	display: none;
+}
+/*这是弹框下面的阴影样式*/
+.shadow {
+	background: #444;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	z-index: 998;
+	display: none;
+}
