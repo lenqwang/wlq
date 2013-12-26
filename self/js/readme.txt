@@ -1,0 +1,3 @@
+js目录存放第三方的javascript脚本，如jquery和jquery的插件等，这些脚本不符合seajs 规范，但也可以用seajs去require，而且像jquery这样最最常用的脚本，我就直接在html里引入 了。
+就把jquery当作浏览器自带的功能，而假设jquery内置的话，jquery 插件就可以直接用seajs区require了，省得下载一个jquery插件还得去包装成seajs格式的。
+再有就是像bootstrap的一些脚本是依赖jquery的，而且整个站都用，没必要为了实现洁癖把它们都用 seajs异步加载。
