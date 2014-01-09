@@ -1,0 +1,36 @@
+/*prettyprint代码效果样式*/
+.prettyprint{
+	background:#22282A;
+	color: #666;
+	padding:2px;
+	border:1px solid #888;
+	font: 12px/1.5 'andale mono','lucida console','Courier New',Courier,monospace;
+}
+.str{color:#B1D631}
+.kwd{color:#527AA2}
+.com{color:#666}
+.typ{color:#FAF4C6}
+.lit{color:#527AA2}
+.pun{color:#FF8613}
+.pln{color:#FAF4C6}
+.tag{color:#527AA2}
+.atn{color:#FAF4C6}
+.atv{color:#B1D631}
+.dec{color:#FAF4C6}
+ol.linenums{margin-top:0;margin-bottom:0;padding-left:40px;list-style-type: decimal;}
+ol.linenums li{height:18px\0;}
+ol.linenums li:hover{background:#313739}
+li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style:none}
+li.L1,li.L3,li.L5,li.L7,li.L9{background:#272E30}
+@media print{
+	.str{color:#060}
+	.kwd{color:#006;font-weight:bold}
+	.com{color:#600;font-style:italic}
+	.typ{color:#404;font-weight:bold}
+	.lit{color:#044}
+	.pun{color:#440}
+	.pln{color:#000}
+	.tag{color:#006;font-weight:bold}
+	.atn{color:#404}
+	.atv{color:#060}
+}

@@ -1,16 +1,47 @@
 <!doctype html>
-<html lang="zh-cn">
+<html lang="zh-cn" ng-app>
 <head>
 	<meta charset="utf-8"/>
 	<title>华南城网</title>
 	<meta name="keywords" content=""/>
 	<meta name="description" content=""/>
-	<link rel="stylesheet" type="text/css" href="/self/css/global.css">
-	<link rel="stylesheet" type="text/css" href="/self/css/index.css">
+	<!-- <link rel="stylesheet" type="text/css" href="/self/css/global.css">
+	<link rel="stylesheet" type="text/css" href="/self/css/index.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://raw.github.com/qqcome110/bootstrap/master/dist/css/bootstrap.css">
+	<script type="text/javascript" src="/self/sea-modules/angular/angularjs/1.2.3/angular.js"></script>
 	<script src="/self/sea-modules/seajs/seajs/2.1.1/sea.js" id="seajsnode"></script>
+
+	<!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="https://raw.github.com/qqcome110/bootstrap/master/docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-	<input type="button" value="点击我" />
-	<script type="text/javascript">seajs.use('/self/myjs/init')</script>
+	<input type="button" value="点击我" class="btn btn-primary" />
+	<input type="text" ng-model="here" placeholder="请输入文字" class="form-control" />
+	<h1>hello {{here || 'world'}}！</h1>
+	<input type="text" placeholder="输入整数" ng-model="num1" /> + <input type="text" placeholder="输入整数" ng-model="num2" /> = <b>{{num1+num2}}</b>
+	
+
+	Quantity: <input type="integer" min="0" ng-model="qty" required >
+	Cost: <input type="number" ng-model="cost" required >
+	total: {{qty * cost | currency}}
+	<script type="text/javascript">
+		function InvoiceCntl($scope) {
+			$scope.qty = 1;
+    		$scope.cost = 19.95;
+		}
+		it('should show of angular binding', function() {
+		    expect(binding('qty * cost')).toEqual('$19.95');
+		    input('qty').enter('2');
+		    input('cost').enter('5.00');
+		    expect(binding('qty * cost')).toEqual('$10.00');
+		});
+	</script>
+	<!--<script type="text/javascript">seajs.use('/self/myjs/init')</script>-->
 </body>
 </html>
