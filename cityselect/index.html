@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8" />
+		<title>html模板</title>
+		<link rel="stylesheet" href="http://wlq/res/bootstrap/v2/css/bootstrap.min.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script> 
+		<script type="text/javascript" src="js/jquery.cityselect.js"></script> 
+	</head>
+	<body>
+		<div id="city"> 
+			  <select class="prov span2"></select>  
+			<select class="city span2" disabled="disabled"></select> 
+			<select class="dist span2" disabled="disabled"></select> 
+		</div> 
+		
+		<script>
+			//初始化默认
+			// $("#city").citySelect();
+
+			$("#city").citySelect({  
+				url:"js/city.min.js",  
+				prov:"江西", //省份 
+				city:"上饶", //城市 
+				dist:"鄱阳县", //区县 
+				nodata:"none" //当子集无数据时，隐藏select 
+			});
+
+
+			/*$("#city").citySelect({ 
+				url:{"citylist":[ 
+					{"p":"前端技术","c":[{"n":"HTML"},{"n":"CSS","a":[{"s":"CSS2.0"},{"s":"CSS3.0"}]}, 
+					{"n":"JAVASCIPT"}]}, 
+					{"p":"编程语言","c":[{"n":"C"},{"n":"C++"},{"n":"PHP"},{"n":"JAVA"}]}, 
+					{"p":"数据库","c":[{"n":"Mysql"},{"n":"SqlServer"},{"n":"Oracle"}]}, 
+				]}, 
+				prov:"", 
+				city:"", 
+				dist:"", 
+				nodata:"none" 
+			}); */
+
+			/*$("#city").citySelect({ 
+				url:"http://wlq/servlet?cmd=getRegions&region_NO&level=1" 
+			}); */
+		</script>
+	</body>
+
+</html>
