@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>仿淘宝三角方向</title>
+    <style type="text/css">
+		i {
+			display: inline;
+			float: left;
+			position: relative;
+			margin: 15px 20px;
+			width: 6px;
+			height: 6px;
+			-webkit-transition: .3s ease-in;
+			-moz-transition: .3s ease-in;
+			-o-transition: .3s ease-in;
+			transition: .3s ease-in
+		}
+		i em, i span {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 0;
+			border-color: rgba(255,255,255,0);
+			border-color: transparent\0;
+			*border-color: transparent;
+			_border-color: tomato;
+			_filter: chroma(color=tomato);
+			border-style: solid;
+			overflow: hidden;
+			*zoom: 1;
+			border-width: 0 10px 10px		/*border-width: 10px 10px 0*/
+		}
+		i em {
+			top: -1px;						/*top: 1px*/
+			border-bottom-color: #6c6c6c /*border-top-color: #6c6c6c*/
+		}
+		i span {
+			border-bottom-color: #fff	/*border-top-color: #fff*/
+		}
+
+		i:hover {
+			-webkit-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+			transform: rotate(180deg);
+			-ms-transform: rotate(0)
+		}
+		
+	
+	</style>
+</head>
+<body>
+	<i>
+		<em></em>
+		<span></span>
+	</i>
+</body>
+</html>
