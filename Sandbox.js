@@ -1,0 +1,264 @@
+/*
+	author: lenq
+	time: 2014/6/20
+	version: 1.0
+*/
+//沙箱模式
+function Sandbox() {
+	var args = Array.prototype.slice.call(arguments), // Array for arguments
+		callback = args.pop(),	//最后一个函数,回调函数
+		modules = (args[0] && typeof args[0] === 'string') ? args : args[0], i;
+	
+	if(!(this instanceof Sandbox)) {
+		return new Sandbox(modules, callback);
+	}
+
+	this.a = 1;
+	this.b = 2;
+	
+	if(!modules || modules === '*') {
+		modules = [];
+		for(i in Sandbox.modules) {
+			if(Sandbox.modules.hasOwnProperty(i)) {
+				modules.push(i);
+			}
+		}
+	}
+
+	for(i = 0; i < modules.length; i++) {
+		Sandbox.modules[modules[i]](this);
+	}
+
+	callback(this);
+}
+
+// Sandbox('test',1,2,3, function() {},12);
+
+Sandbox.prototype = {
+	name: 'Sandbox',
+	version: '1.0',
+	getName: function() {
+		return this.name;
+	}
+};
+
+Sandbox.modules = {};
+Sandbox.modules.dom = function (box) {
+	box.getId = function (id) {
+		return document.getElementById(id);
+	};
+	box.getStyle = function () {};
+	box.foo = "bar";
+};
+Sandbox.modules.event = function (box) {
+	// access to the Sandbox prototype if needed:
+	// box.constructor.prototype.m = "mmm";
+	box.attachEvent = function () {return 'typeof window: '+ typeof window;};
+	box.dettachEvent = function () {};
+};
+Sandbox.modules.ajax = function (box) {
+	box.makeRequest = function () {return 'makeRequest is running...';};
+	box.getResponse = function () {};
+};
+
+//工具类
+Sandbox.modules.util = function (box) {
+	var trim = ''.trim;
+	var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+
+	box.isType = function(type) {
+		return function(obj) {
+			return Object.prototype.toString.call(obj) === '[object ' + type + ']';
+		}
+	};
+
+	box.isFunction = box.isType('Function');
+	box.isObject = box.isType('Object');
+	box.isArray = Array.isArray || this.isType('Array');
+	box.isPluginObject = function(obj) {
+		var key;
+		
+		for(key in obj) {}
+		return key === undefined || Object.prototype.hasOwnProperty.call(obj, key);
+	};
+	
+	// 将一个字符串复制N次
+	box.repeatArray = function(target, n) {
+		//ver1: return (new Array(n + 1)).join(target);
+		// ver2: return Array.prototype.join.call({length: n + 1}, target);
+		// ver3: return (n <= 0) ? '' : target.concat(repeat(target, --n));
+		var s = target, total = '';
+		while(n > 0) {
+			if(n % 2 == 1)
+				total += s;
+			if(n == 1)
+				break;
+			s += s;
+			n = n >> 1;
+		}
+		return total;
+	};
+
+	// 统计字符串的字节数
+	box.byteLen = function(str, charset) {
+		var total = 0, charCode, i, len;
+
+		charset = charset ? charset.toLowerCase() : '';
+
+		if(charset === 'utf-16' || charset === 'utf16') {
+			for(i = 0, len = str.length; i < len; i++) {
+				charCode = str.charCodeAt(i);
+
+				if(charCode <= 0xffff) {
+					total += 2;
+				}
+				else {
+					total += 4;
+				}
+			}
+		}
+		else {
+			for(i = 0, len = str.length; i < len; i++) {
+				charCode = str.charCodeAt(i);
+
+				if(charCode <= 0x007f) {
+					total += 1;
+				}
+				else if(charCode <= 0x07ff) {
+					total += 2;
+				}
+				else if(charCode <= 0xffff) {
+					total += 3;
+				}
+				else {
+					total += 4;
+				}
+			}
+		}
+
+		return total;
+	};
+
+	// 截图字符串并在其后加...或其他符号
+	box.truncate = function(target, length, truncation) {
+		length = length || 30;
+		truncation = truncation === void(0) ? '...' : truncation;
+		
+		return target.length > length ? target.slice(0, length) + truncation : String(target); 
+	};
+
+	// 将字符串转换为驼峰风格
+	box.camelize = function(target) {
+		if(target.indexOf('-') < 0 && target.indexOf('_') < 0) {
+			return target;
+		}
+
+		return target.replace(/[-_][^-_]/g, function(match) {
+			return match.charAt(1).toUpperCase();
+		});
+	};
+
+	// 将字符串转换为html能识别的内容
+	box.escapeHTML = function(target) {
+		return target.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+	};
+
+	// 将字符串安全格式化为正则表达式的源码
+	box.escapeRegExp = function(target) {
+		return target.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
+	};
+	
+
+	// trim 仿jQuery
+	box.trim = trim && !trim.call('\uFEFF\xA0') ? function(target) {return target == null ? '': trim.call(target);} : function(target) {return target == null ? '' : (target + '').replace(rtrim, '');};
+	// 继承
+	box.extend = function() {
+		var target = arguments[0] || {}, options, name, src, copy, clone,
+			length = arguments.length, i = 0, deep = false;
+		
+		if(typeof target === 'boolean') {
+			deep = target;
+
+			target = arguments[i] || {};
+			i++;
+		}
+
+		if(typeof target !== 'object' && this.isFunction(target)) {
+			target = {};
+		}
+		
+		if(i == length) {
+			target = this;
+			i--;
+		}
+
+		for(; i < length; i++) {
+			if( (options = arguments[i]) != null ) {
+				for(name in options) {
+					src = target[name];
+					copy = options[name];
+
+					if(target == copy) {
+						continue;
+					}
+
+					if(deep && copy && (this.isPluginObject(copy) || (copyIsArray = this.isArray(copy)) )) {
+						if(copyIsArray) {
+							copyIsArray = false;
+							clone = src && this.isArray(src) ? src: [];
+						}
+						else {
+							clone = src && this.isPluginObject(src) ? src : {};
+						}
+
+						target[name] = this.extend(deep, clone, copy);
+					}
+					else if(copy !== undefined) {
+						target[name] = copy;
+					}
+				}
+			}
+		}
+		return target;
+	}
+}
+
+
+
+/*使用方法*/
+Sandbox(function(box) {
+	console.log(box.version);
+
+	console.log('复制And 5次: ' +box.repeatArray('And', 5));
+	console.log('王林泉isme 有多少个字节: '+ box.byteLen('王林泉isme'));
+	console.log('截取字符串 "这是一个神奇的网站": ' + box.truncate('这是一个神奇的网站', 5));
+	console.log('is_in-my-heart转换为驼峰式: '+ box.camelize('is_in-my-heart'));
+	console.log('<html class="yes"></html> : '+ box.escapeHTML('<html class="yes"></html>'));
+	console.log('<html class="yes">: ' +box.escapeRegExp('f4wef54w'));
+	console.log(' 飞舞发  非我非   非我非  非我非                : '+ box.trim(' 飞舞发  非我非   非我非  非我非                '));
+});
+
+/*
+Sandbox(['dom', 'ajax', 'event'], function(box) {
+	console.log('box: ' + box.getId('test').innerHTML + '\n ajax: '+ box.makeRequest() + '\n event: '+ box.attachEvent());
+});
+
+
+Sandbox('util', function(box) {
+	console.log(box.isFunction(function() {}));
+	var result = box.extend(false, {name: 'xyl', age: 22}, {name: 'wanglinquan', addr: '广州天河区'});
+	
+	for(var i in result) {
+		console.log('i: ' + i + '\nresult: '+ result[i]);
+	}
+});
+
+*/
+
+			
+
+			
