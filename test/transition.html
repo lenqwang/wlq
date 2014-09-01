@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css3动画---加载(loading)</title>
+	<style>
+		.container {width: 500px; height: 300px; border: 1px solid #ccc; margin: 50px auto; position: relative;}
+		.wraper {position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 60px; height: 60px; margin: auto;}
+		.spinner {
+		    box-sizing: border-box;
+		    width: 60px;
+		    height: 60px;
+		    border-left: 15px solid #78B2F2;
+		    border-right: 15px solid #78B2F2;
+		    overflow: hidden;
+		    position: relative;
+		    left: 2em;
+		    margin-bottom: 2em;
+
+		    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+		    animation: rotateplane 1.2s infinite ease-in-out;
+		}
+		    
+		.spinner:before,
+		.spinner:after {
+		    border-left: 11px solid #78B2F2;
+		    border-right: 11px solid #78B2F2;        
+		    box-sizing: border-box;
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    width: 32px;
+		    height: 15px;
+		}
+
+		.spinner:before {
+		    top: 0;
+		    left: -1px;
+		}
+
+		.spinner:after {
+		    bottom: 0;
+		    left: -1px;
+		}
+
+		@-webkit-keyframes rotateplane {
+		    0% { -webkit-transform: perspective(120px) }
+		    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+		    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+		}
+
+		@keyframes rotateplane {
+		    0% {
+		        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		    } 50% {
+		        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		    } 100% {
+		        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		    }
+		}
+
+		/* windmill */
+		.windmill {
+			background: url(images/windmill.png) no-repeat; 
+			width: 55px; 
+			height: 54px;
+			-webkit-animation: rotatewind 1s infinite ease-in-out;
+		    animation: rotatewind 1s infinite ease-in-out;
+		}
+
+		@-webkit-keyframes rotatewind {
+		    0% { -webkit-transform: perspective(120px) rotate(0deg)}
+		    5% { -webkit-transform: perspective(120px) rotate(10deg)}
+		    10% { -webkit-transform: perspective(120px) rotate(20deg)}
+		    15% { -webkit-transform: perspective(120px) rotate(40deg)}
+		    20% { -webkit-transform: perspective(120px) rotate(60deg)}
+		    25% { -webkit-transform: perspective(120px) rotate(80deg)}
+		    30% { -webkit-transform: perspective(120px) rotate(100deg)}
+		    35% { -webkit-transform: perspective(120px) rotate(120deg)}
+		    40% { -webkit-transform: perspective(120px) rotate(140deg)}
+		    45% { -webkit-transform: perspective(120px) rotate(160deg)}
+		    50% { -webkit-transform: perspective(120px) rotate(180deg) }
+		    55% { -webkit-transform: perspective(120px) rotate(200deg) }
+		    60% { -webkit-transform: perspective(120px) rotate(220deg) }
+		    65% { -webkit-transform: perspective(120px) rotate(240deg) }
+		    70% { -webkit-transform: perspective(120px) rotate(240deg) }
+		    75% { -webkit-transform: perspective(120px) rotate(260deg) }
+		    80% { -webkit-transform: perspective(120px) rotate(280deg) }
+		    85% { -webkit-transform: perspective(120px) rotate(300deg) }
+		    90% { -webkit-transform: perspective(120px) rotate(320deg) }
+		    95% { -webkit-transform: perspective(120px) rotate(340deg) }
+		    100% { -webkit-transform: perspective(120px) rotate(360deg) }
+		}
+
+		@keyframes rotateplane {
+		    0% {
+		        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		    } 50% {
+		        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		    } 100% {
+		        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		    }
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="wraper">
+			<div class="spinner"></div>
+		</div>
+	</div>
+
+	<div class="windmill">
+		<!--[if gt IE 7]><img id="windmill-img" src="images/windmill.png" /><![endif]-->
+	</div>
+</body>
+</html>
