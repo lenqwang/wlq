@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>IE6下面的position fixed</title>
+	<style>
+		* {margin: 0; padding: 0}
+		ul {width: 160px; height: auto; z-index: 999; right: 50px; top: 210px; position: fixed; _position: absolute; _margin-top: 210px; _top: expression(eval(document.documentElement.scrollTop)); list-style: none;}
+		li {padding: 10px; border: 1px solid #ccc; margin-bottom: 5px}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>HTML</li>
+		<li>CSS</li>
+		<li>JS</li>
+	</ul>
+</body>
+</html>
