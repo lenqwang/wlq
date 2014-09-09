@@ -1,0 +1,389 @@
+.sparrow {
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50% 60% 20% 60%;
+  background-color: #d94600;
+  -webkit-transform: rotate(-10deg);
+     -moz-transform: rotate(-10deg);
+      -ms-transform: rotate(-10deg);
+       -o-transform: rotate(-10deg);
+          transform: rotate(-10deg);
+}
+.sparrow:before {
+  position: absolute;
+  top: 20px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border: 17px solid transparent;
+  border-bottom: 13px solid #fc0;
+  content: '';
+  -webkit-transform: rotate(67deg);
+     -moz-transform: rotate(67deg);
+      -ms-transform: rotate(67deg);
+       -o-transform: rotate(67deg);
+          transform: rotate(67deg);
+}
+.sparrow:after {
+  position: absolute;
+  top: 44px;
+  left: -13px;
+  width: 0;
+  height: 0;
+  border: 13px solid transparent;
+  border-top: 9px solid #fc0;
+  content: '';
+  -webkit-transform: rotate(-34deg);
+     -moz-transform: rotate(-34deg);
+      -ms-transform: rotate(-34deg);
+       -o-transform: rotate(-34deg);
+          transform: rotate(-34deg);
+}
+.sparrow-eye {
+  position: absolute;
+  top: 20px;
+  left: 26px;
+  width: 28px;
+  height: 28px;
+  -webkit-border-radius: 100%;
+     -moz-border-radius: 100%;
+          border-radius: 100%;
+  background-color: #fff;
+}
+.sparrow-eye:before {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background-color: #000;
+  content: '';
+}
+.sparrow-eye:after {
+  position: absolute;
+  top: 11px;
+  left: 9px;
+  width: 3px;
+  height: 3px;
+  border-radius: 100%;
+  background-color: #fff;
+  content: '';
+    -webkit-animation: sparrow-eye .5s infinite ease-in-out; /* Safari and Chrome */
+     -moz-animation: sparrow-eye .5s infinite ease-in-out; /* Firefox */
+       -o-animation: sparrow-eye .5s infinite ease-in-out; /* Opera */
+          animation: sparrow-eye .5s infinite ease-in-out;
+  box-shadow: 0 0 2px #fff;
+  box-shadow: 0 0 2px #fff;
+}
+.sparrow-wings {
+  position: absolute;
+  top: 36px;
+  left: 60px;
+  width: 36px;
+  height: 36px;
+  border-right: 5px solid #f93;
+  border-bottom: 5px solid #f93;
+  border-radius: 50%;
+  -webkit-animation: sparrow-wings 3s infinite ease-in-out; /* Safari and Chrome */
+     -moz-animation: sparrow-wings 3s infinite ease-in-out; /* Firefox */
+       -o-animation: sparrow-wings 3s infinite ease-in-out; /* Opera */
+          animation: sparrow-wings 3s infinite ease-in-out;
+  box-shadow: 3px 0 #d94600, 6px 5px #f93, 9px 5px #d94600, 10px 12px #f93;
+}
+.sparrow-foot-left {
+  position: absolute;
+  top: 115px;
+  left: 20px;
+  width: 26px;
+  height: 14px;
+  border-left: 1px solid #333;
+  transform: rotate(40deg);
+}
+.sparrow-foot-left:before {
+  position: absolute;
+  top: 11px;
+  left: -5px;
+  width: 26px;
+  height: 7px;
+  border-left: 1px solid #333;
+  content: '';
+  transform: rotate(30deg);
+}
+.sparrow-foot-left:after {
+  position: absolute;
+  top: -2px;
+  left: -1px;
+  width: 26px;
+  height: 7px;
+  border-left: 1px solid #333;
+  content: '';
+  transform: rotate(-30deg);
+}
+.sparrow-foot-right {
+  position: absolute;
+  top: 119px;
+  left: 70px;
+  width: 26px;
+  height: 14px;
+  border-left: 1px solid #333;
+  transform: rotate(5deg);
+}
+.sparrow-foot-right:before {
+  position: absolute;
+  top: 11px;
+  left: -5px;
+  width: 26px;
+  height: 7px;
+  border-left: 1px solid #333;
+  content: '';
+  transform: rotate(30deg);
+}
+.sparrow-foot-right:after {
+  position: absolute;
+  top: -2px;
+  left: -1px;
+  width: 26px;
+  height: 7px;
+  border-left: 1px solid #333;
+  content: '';
+  transform: rotate(-30deg);
+}
+.sparrow-tail {
+  position: absolute;
+  top: 67px;
+  right: -20px;
+  width: 70px;
+  height: 30px;
+  border: 0 solid #930;
+  border-bottom: 22px solid #d94600;
+  border-radius: 50% 50% 50% 20%;
+  transform: rotate(-4deg);
+}
+.sparrow-tail:before {
+  position: absolute;
+  top: 5px;
+  left: 48px;
+  width: 20px;
+  height: 20px;
+  border: 0 solid #930;
+  border-top: 12px solid #d94600;
+  border-radius: 50%;
+  content: '';
+  transform: rotate(230deg);
+}
+@keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-moz-keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-ms-keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-o-keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes sparrow-wings {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes sparrow-eye {
+  0% {
+    width: 3px;
+    height: 3px;
+  }
+  25% {
+    width: 3px;
+    height: 2px;
+  }
+  50% {
+    width: 2px;
+    height: 2px;
+  }
+  75% {
+    width: 3px;
+    height: 2px;
+  }
+  100% {
+    width: 3px;
+    height: 3px;
+  }
+}
+@-moz-keyframes sparrow-eye {
+  0% {
+    top: 11px;
+    left: 9px;
+  }
+  25% {
+    top: 11px;
+    left: 8px;
+  }
+  50% {
+    top: 11px;
+    left: 9px;
+  }
+  75% {
+    top: 11px;
+    left: 8px;
+  }
+  100% {
+    top: 11px;
+    left: 9px;
+  }
+}
+@-ms-keyframes sparrow-eye {
+  0% {
+    top: 11px;
+    left: 9px;
+  }
+  25% {
+    top: 11px;
+    left: 8px;
+  }
+  50% {
+    top: 11px;
+    left: 9px;
+  }
+  75% {
+    top: 11px;
+    left: 8px;
+  }
+  100% {
+    top: 11px;
+    left: 9px;
+  }
+}
+@-o-keyframes sparrow-eye {
+  0% {
+    top: 11px;
+    left: 9px;
+  }
+  25% {
+    top: 11px;
+    left: 8px;
+  }
+  50% {
+    top: 11px;
+    left: 9px;
+  }
+  75% {
+    top: 11px;
+    left: 8px;
+  }
+  100% {
+    top: 11px;
+    left: 9px;
+  }
+}
+@keyframes sparrow-eye {
+  0% {
+    top: 11px;
+    left: 9px;
+  }
+  25% {
+    top: 11px;
+    left: 8px;
+  }
+  50% {
+    top: 11px;
+    left: 9px;
+  }
+  75% {
+    top: 11px;
+    left: 8px;
+  }
+  100% {
+    top: 11px;
+    left: 9px;
+  }
+}
