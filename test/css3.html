@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8" />
+		<title>css3</title>
+		<style>
+			.layout {width: 1000px; margin: auto;}
+			.shadow {
+				margin:10px;
+				padding:0;
+				width:100px;
+				height:100px;
+				border:1px solid rgba(0,0,0,0.5);
+				border-radius:10px 10px 2px 2px;
+				-webkit-box-shadow:
+					0 2px 6px rgba(0,0,0,0.5),
+					inset 0 1px rgba(255,255,255,0.3),
+					inset 0 10px rgba(255,255,255,0.2),
+					inset 0 10px 20px rgba(255,255,255,0.25),
+					inset 0 -15px 30px rgba(0,0,0,0.3);
+				-moz-box-shadow:
+					0 2px 6px rgba(0,0,0,0.5),
+					inset 0 1px rgba(255,255,255,0.3),
+					inset 0 10px rgba(255,255,255,0.2),
+					inset 0 10px 20px rgba(255,255,255,0.25),
+					inset 0 -15px 30px rgba(0,0,0,0.3);
+				box-shadow:
+					0 2px 6px rgba(0,0,0,0.5),
+					inset 0 1px rgba(255,255,255,0.3),
+					inset 0 10px rgba(255,255,255,0.2),
+					inset 0 10px 20px rgba(255,255,255,0.25),
+					inset 0 -15px 30px rgba(0,0,0,0.3);
+				background:rgba(0,0,0,0.25);
+			}
+			.drop-shadow {
+			    width: 300px;
+			    height: 150px;
+			    position: relative;
+			    background: #ccc; 
+			    margin-left: 100px;       
+			  }
+
+			  .drop-shadow:before,
+			  .drop-shadow:after {
+			    content: "";
+			    position: absolute;
+			    z-index: -1;
+			    bottom: 15px;
+			    left: 10px;
+			    width: 50%;
+			    max-width: 150px;
+			    height: 20%;
+			    /*add box-shadow*/
+			    -webkit-box-shadow: 0 15px 10px rgba(125,125,125,0.8);
+			    -moz-box-shadow: 0 15px 10px rgba(125,125,125,0.8);
+			    box-shadow: 0 15px 10px rgba(125,125,125,0.8);
+			    /*add css3 transform*/
+			    -webkit-transform: rotate(-3deg);
+			    -moz-transform: rotate(-3deg);
+			    -o-transform: rotate(-3deg);
+			    transform: rotate(-3deg);
+			  }
+
+			 .drop-shadow:after {
+			    right:10px;
+			    left: auto;
+			    -webkit-transform:rotate(3deg);
+			    -moz-transform:rotate(3deg);
+			    -o-transform:rotate(3deg);
+			    transform:rotate(3deg);
+			 }
+		</style>
+		<link rel="stylesheet" href="/res/bootstrap/v2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/res/prettify/prettify.css">
+		<script src="/res/myjs/sea-jquery.js"></script>
+	</head>
+	<body>
+		<!-- 
+			<blockquote>自定义提示信息</blockquote>
+			<pre class="prettyprint linenums"></pre>
+		 -->
+		<div class="layout">
+			<h1>css3选择器</h1>
+			<blockquote>基本选择器</blockquote>
+			<pre class="prettyprint linenums">
+html结构：
+&lt;div class="demo"&gt;
+	&lt;ul class="clearfix"&gt;
+		&lt;li id="first" class="first"&gt;1&lt;/li&gt;
+		&lt;li class="active important"&gt;2&lt;/li&gt;
+		&lt;li class="important items"&gt;3&lt;/li&gt;
+		&lt;li class="important"&gt;4&lt;/li&gt;
+		&lt;li class="items"&gt;5&lt;/li&gt;
+		&lt;li&gt;6&lt;/li&gt;
+		&lt;li&gt;7&lt;/li&gt;
+		&lt;li&gt;8&lt;/li&gt;
+		&lt;li&gt;9&lt;/li&gt;
+		&lt;li id="last" class="last"&gt;10&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+css:
+一、通配符选择器（＊）
+
+	* {margin: 0; padding: 0}
+	div * {border: 1px solid #ccc}
+
+二、元素选择器(E)
+
+	li {background-color: #ccc; color: #f60}
+
+三、类选择器（.className）
+
+	.demo {font-weight: bold; color: yellow}
+	p.items {color: red;}
+	.important {font-weight: bold;}
+	.active {color: green;background: lime;}
+	.items {color: #fff;background: #000;}
+	.important.items {background:#ccc;}
+	.first.last {color: blue;}  /*无效，不存在次多类选择器*/
+
+/*所有浏览器都支持类选择器，但多类选择器（.className1.className2）不被ie6支持。*/
+
+四、id选择器（#ID）
+
+	#first {background: lime;color: #000;}
+	#last {background: #000;color: lime;}
+
+五、后代选择器（Ｅ Ｆ）
+
+	.demo li {color: blue;}
+
+六、子元素选择器(E>F)
+
+	ul > li {background: green;color: yellow;}
+
+七、相邻兄弟元素选择器(E + F)
+
+	li + li {background: green;color: yellow; border: 1px solid #ccc;}
+	.active + li {background: green;color: yellow; border: 1px solid #ccc;}
+
+八、通用兄弟选择器（Ｅ ~ Ｆ）
+
+	.active ~ li {background: green;color: yellow; border: 1px solid #ccc;}
+
+九、群组选择器（selector1,selector2,...,selectorN）
+
+	.first, .last {background: green;color: yellow; border: 1px solid #ccc;}
+</pre>
+		</div>
+		<div class="layout">
+			<blockquote>属性选择器</blockquote>
+			<pre class="prettyprint linenums">
+html结构：
+&lt;div class="demo clearfix"&gt;
+	&lt;a href="http://www.w3cplus.com" target="_blank" class="links item first" id="first" title="w3cplus"&gt;1&lt;/a&gt;
+	&lt;a href="" class="links active item" title="test website" target="_blank" lang="zh"&gt;2&lt;/a&gt;
+	&lt;a href="sites/file/test.html" class="links item" title="this is a link" lang="zh-cn"&gt;3&lt;/a&gt;
+	&lt;a href="sites/file/test.png" class="links item" target="_balnk" lang="zh-tw"&gt;4&lt;/a&gt;
+	&lt;a href="sites/file/image.jpg" class="links item" title="zh-cn"&gt;5&lt;/a&gt;
+	&lt;a href="mailto:w3cplus@hotmail" class="links item" title="website link" lang="zh"&gt;6&lt;/a&gt;
+	&lt;a href="" class="links item" title="open the website" lang="cn"&gt;7&lt;/a&gt;
+	&lt;a href="" class="links item" title="close the website" lang="en-zh"&gt;8&lt;/a&gt;
+	&lt;a href="" class="links item" title="http://www.sina.com"&gt;9&lt;/a&gt;
+	&lt;a href="" class="links item last" id="last"&gt;10&lt;/a&gt;
+&lt;/div&gt;
+
+一、E[attr]
+
+	.demo a[id] {background: blue; color:yellow;font-weight:bold;}
+	.demo a[href][title] {background: yellow; color:green;}
+
+二、E[attr="value"]
+
+	.demo a[id="first"] {background: blue; color:yellow;font-weight:bold;}
+	.demo a[href="http://www.w3cplus.com"][title] {background: yellow; color:green;}
+	.demo a[class="links"]{color:red};/*这是一种写法不能和上面的html所匹配*/
+	.demo a[class="links item"]{color:red};/*这样才是匹配的，记得中间的空格不能少的哟*/
+
+三、E[attr~="value"]
+
+	.demo a[title~="website"]{background:orange;color:green;}
+
+四、E[attr^="value"]
+
+	.demo a[href^="http://"]{background:orange;color:green;}
+	.demo a[href^="mailto:"]{background:green;color:orange;}
+
+五、E[attr$="value"]
+
+	.demo a[href$="png"]{background:orange;color:green;}
+
+六、E[attr*="value"]
+
+	.demo a[title*="site"]{background:black;color:white;}
+
+七、E[attr|="value"]
+
+	.demo a[lang|="zh"]{background:gray;color:yellow;}
+			</pre>
+		</div>
+	<div class="layout">
+		<blockquote>伪类选择器</blockquote>
+			<pre class="prettyprint linenums">
+html结构：
+&lt;div class="demo clearfix"&gt;
+  	&lt;ul class="clearfix"&gt;
+		&lt;li class="first links odd" id="first"&gt;&lt;a href=""&gt;1&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links even"&gt;&lt;a href=""&gt;2&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links odd"&gt;&lt;a href=""&gt;3&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links even"&gt;&lt;a href=""&gt;4&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links odd"&gt;&lt;a href=""&gt;5&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links even"&gt;&lt;a href=""&gt;6&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links odd"&gt;&lt;a href=""&gt;7&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links even"&gt;&lt;a href=""&gt;8&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links odd"&gt;&lt;a href=""&gt;9&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="links even last" id="last"&gt;&lt;a href=""&gt;10&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+
+E:pseudo-class {property:value}/*其中E为元素;pseudo-class为伪类名称;property是css的属性;value为css的属性值*/
+
+	a:link {color:red;}
+
+E.class:pseudo-class{property:value}
+	
+	a.selected:hover {color: blue;}
+
+一、动态伪类
+	
+	/*爱恨原则 (LoVe/HAte) */
+	.demo a:link {color:gray;}/*链接没有被访问时前景色为灰色*/
+	.demo a:visited{color:yellow;}/*链接被访问过后前景色为黄色*/
+	.demo a:hover{color:green;}/*鼠标悬浮在链接上时前景色为绿色*/
+	.demo a:active{color:blue;}/*鼠标点中激活链接那一下前景色为蓝色*/
+
+二、UI元素状态伪类
+	
+	input[type="text"]:disabled {border:1px solid #999;background-color: #fefefe;}
+
+三、CSS3的:nth选择器
+	
+	:fist-child选择某个元素的第一个子元素；
+    :last-child选择某个元素的最后一个子元素；
+    :nth-child()选择某个元素的一个或多个特定的子元素；
+    :nth-last-child()选择某个元素的一个或多个特定的子元素，从这个元素的最后一个子元素开始算；
+    :nth-of-type()选择指定的元素；
+    :nth-last-of-type()选择指定的元素，从元素的最后一个开始计算；
+    :first-of-type选择一个上级元素下的第一个同类子元素；
+    :last-of-type选择一个上级元素的最后一个同类子元素；
+    :only-child选择的元素是它的父元素的唯一一个了元素；
+    :only-of-type选择一个元素是它的上级元素的唯一一个相同类型的子元素；
+    :empty选择的元素里面没有任何内容。
+
+
+    :nth-child(length);/*参数是具体数字*/
+	:nth-child(n);/*参数是n,n从0开始计算*/
+	:nth-child(n*length)/*n的倍数选择，n从0开始算*/
+	:nth-child(n+length);/*选择大于length后面的元素*/
+	:nth-child(-n+length)/*选择小于length前面的元素*/
+	:nth-child(n*length+1);/*表示隔几选一*/
+	//上面length为整数
+
+四、否定选择器（:not）
+	
+	input:not([type="submit"]) {border: 1px solid red;}
+
+四、伪元素
+
+	p::first-line {font-weight:bold;}
+	p::first-letter {font-size: 56px;float:left;margin-right:3px;}
+
+	/*清楚浮动*/
+	.clearfix:before,
+	.clearfix:after {
+	     content: ".";
+	     display: block;
+	     height: 0;
+	     visibility: hidden;
+	  }
+	.clearfix:after {clear: both;}
+	.clearfix {zoom: 1;}
+
+	::first-line选择元素的第一行，比如说改变每个段落的第一行文本的样式
+	::first-letter选择文本块的第一个字母，除非在同一行里面包含一些其它元素，不过这个主要运用于段落排版上多，比如说首字下沉
+	::before和::after这两个主要用来给元素的前面或后面插入内容，这两个常用"content"配合使用，见过最多的就是清除浮动
+	::selection用来改变浏览网页选中文的默认效果
+		</pre>
+	</div>
+	<div class="layout">
+		<blockquote>选择器的执行效果</blockquote>
+		<p class="alert-info">选择器的执行规则是：选择器从右到左的原则</p>
+		<p class="alert-info">越具体的关键选择器，其性能越高</p>
+		<ul>
+			<li>id选择器（#myid）</li>
+			<li>类选择器（.myclassname）</li>
+			<li>标签选择器（div,h1,p）</li>
+			<li>相邻选择器（h1+p）</li>
+			<li>子选择器（ul > li）</li>
+			<li>后代选择器（li a）</li>
+			<li>通配符选择器（*）</li>
+			<li>属性选择器（a[rel="external"]）</li>
+			<li>伪类选择器（a:hover,li:nth-child）</li>
+		</ul>
+		<blockquote>使用选择器的几点规则</blockquote>
+		<ul>
+			<li>避免普遍规则</li>
+			<li>不要在ID选择器前加标签名或类名</li>
+			<li>不要在类名选择器前加标签名</li>
+			<li>尽可能使用具体的类别</li>
+			<li>避免使用后代选择器</li>
+			<li>标签分类规则中不应该包含一个子选择器</li>
+			<li>子选择器的问题</li>
+			<li>借助相关继承关系</li>
+			<li>使用范围内的样式表</li>
+		</ul>
+		<pre class="prettyprint linenums">
+// 直接选择器
+.tdxx{
+	background: red;
+}
+
+// 后代选择器
+table tr td.tdxx{
+	background: red;
+}
+		</pre>
+		<p class="alert-error">
+			直接选择器要比后代选择器的性能要高
+		</p>
+	</div>
+	<div class="layout">
+		<h1>Gragient</h1>
+		<blockquote>线性渐变(linear-gradient)</blockquote>
+		<pre class="prettyprint linenums">
+-moz-linear-gradient( [&lt;point&gt; || &lt;angle&gt;,]? &lt;stop&gt;, &lt;stop&gt; [, &lt;stop&gt;]* )
+&lt;div class="example example1"&gt;&lt;/div&gt;
+-webkit-linear-gradient( [&lt;point&gt; || &lt;angle&gt;,]? &lt;stop&gt;, &lt;stop&gt; [, &lt;stop&gt;]* )//最新发布书写语法
+-o-linear-gradient([&lt;point&gt; || &lt;angle&gt;,]? &lt;stop&gt;, &lt;stop&gt; [, &lt;stop&gt;]); /* Opera 11.10+ */
+用法：linear-gradient(top, #f1f1f1, #e1e1e1);
+四、线性渐变在Trident (IE)下的应用
+IE:
+filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#1471da, endColorstr=#1C85FB);/*IE&lt;9&gt;*/
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#1471da, endColorstr=#1C85FB)";/*IE8+*/
+用法: filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#000000');
+
+1、开始于center（水平方向）和top（垂直方向）也就是Top → Bottom：
+
+	background: -moz-linear-gradient(top, #ace, #f96); 
+
+2、始于left（水平方向）和center（垂直方向）也是就Left → Right：
+
+	background: -moz-linear-gradient(left, #ace, #f96);
+
+3、起始于left（水平方向）和top（垂直方向）:
+
+	background: -moz-linear-gradient(left top, #ace, #f96);
+
+4、Linear Gradient (with Even Stops):
+
+	background: -moz-linear-gradient(left, #ace, #f96, #ace, #f96, #ace); 
+
+5、with Specified Arbitrary Stops：
+
+	background: -moz-linear-gradient(left, #ace, #f96 5%, #ace, #f96 95%, #ace); 
+
+6、角度(Angle)：
+
+	background: -moz-linear-gradient(left 30deg, #ace, #f96);
+
+7、渐变上应用透明─透明度(Transparency)：
+	
+	background: -moz-linear-gradient(right, rgba(255,255,255,0), rgba(255,255,255,1)),url(http://demos.hacks.mozilla.org/openweb/resources/images/patterns/flowers-pattern.jpg);
+
+background: -moz-linear-gradient(left top, #ace, #f96);
+background: -moz-linear-gradient(left, #ace, #f96, #ace, #f96, #ace); 
+background: -moz-linear-gradient(left, #ace, #f96 5%, #ace, #f96 95%, #ace);
+background: -moz-linear-gradient(left 30deg, #ace, #f96);	//30度角度渐变
+background: -moz-linear-gradient(left, red, #f96, yellow, green, #ace);
+		</pre>
+		<blockquote>CSS3的径向渐变</blockquote>
+		<pre class="prettyprint linenums">
+语法：
+	-moz-radial-gradient([&lt;bg-position&gt; || &lt;angle&gt;,]? [&lt;shape&gt; || &lt;size&gt;,]? &lt;color-stop&gt;, &lt;color-stop&gt;[, &lt;color-stop&gt;]*);
+
+用法：
+	background: -moz-radial-gradient(#ace, #f96, #1E90FF);
+
+一些示例：
+	background: -moz-radial-gradient(#ace 5%, #f96 25%, #1E90FF 50%);
+	background: -moz-radial-gradient(bottom left, circle, #ace, #f96, #1E90FF);
+	background: -moz-radial-gradient(bottom left, ellipse, #ace, #f96, #1E90FF);
+	background: -moz-radial-gradient(ellipse closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -moz-radial-gradient(ellipse farthest-corner, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -moz-radial-gradient(circle closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -moz-radial-gradient(circle farthest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -moz-radial-gradient(#ace, #f96, #1E90FF);
+	background: -moz-radial-gradient(contain, #ace, #f96, #1E90FF);
+	background: -moz-radial-gradient(circle, #ace, #f96); 
+	background: -moz-radial-gradient(80% 20%, closest-corner, #ace, #f96); 
+	重复渐变的使用：
+	background: -moz-repeating-radial-gradient(#ace, #ace 5px, #f96 5px, #f96 10px);
+	background: -moz-repeating-linear-gradient(top left -45deg, #ace, #ace 5px, #f96 5px, #f96 10px);
+		</pre>
+		<blockquote>css3圆角</blockquote>
+		<pre class="prettyprint linenums">
+border-radius ： none | &lt;length&gt;{1,4} [/ &lt;length&gt;{1,4} ]?
+
+用法：
+	.demo {
+	  	border-radius: 10px 15px 20px 30px / 20px 30px 10px 15px;
+	}
+	// 这种写法我们前面有提到过，“/”前是指圆角的水平半径，而“/”后是指圆角的垂直半径，他们两都遵循TRBL的顺序原则。
+	等价于：
+	.demo {
+	  border-top-left-radius: 10px 20px;
+	  border-top-right-radius: 15px 30px;
+	  border-bottom-right-radius: 20px 10px;
+	  border-bottom-left-radius: 30px 15px;
+	}
+	/*水平1 垂直1 / 水平2 垂直2*/
+		</pre>
+		<blockquote>CSS3的文字阴影—text-shadow </blockquote>
+		<pre class="prettyprint linenums">
+语法：
+	text-shadow ： none | &lt;length&gt; none | [&lt;shadow&gt;, ] * &lt;shadow&gt; 或none | &lt;color>&gt;[, &lt;color>&gt;]*
+也就是：
+text-shadow:[颜色(Color)  x轴(X Offset) y轴(Y Offset) 模糊半径(Blur)],[颜色(color) x轴(X Offset) y轴(Y Offset) 模糊半径(Blur)]...
+或者
+text-shadow:[x轴(X Offset) y轴(Y Offset)  模糊半径(Blur)  颜色(Color)],[x轴(X Offset) y轴(Y Offset)  模糊半径(Blur)  颜色(Color)]...
+.demo1 {
+   text-shadow: 0 0 1px rgba(255,255,255,0.6);
+   text-transform: uppercase;
+   color: transparent
+}
+
+兼容IE：
+	E {filter:shadow(Color=颜色值,Direction=数值,Strength=数值)}
+
+示例：
+	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de;
+	text-shadow: 1px 1px rgba(197, 223, 248,0.8),2px 2px rgba(197, 223, 248,0.8),3px 3px rgba(197, 223, 248,0.8),4px 4px rgba(197, 223, 248,0.8),5px 5px rgba(197, 223, 248,0.8),6px 6px rgba(197, 223, 248,0.8); // 3D效果
+		</pre>
+		<blockquote>CSS3 box-shadow </blockquote>
+		<pre class="prettyprint linenums">
+语法：
+E {box-shadow: &lt;length&gt; &lt;length&gt; &lt;length&gt;?&lt;length&gt;?||&lt;color>&gt;
+也就是：
+E {box-shadow:inset x-offset y-offset blur-radius spread-radius color}
+换句说：
+对象选择器 {box-shadow:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色}
+
+用法：
+	box-shadow: 0 0 10px #000 inset;
+
+兼容IE：
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=’颜色值’, Direction=阴影角度（数值）, Strength=阴影半径（数值）);
+
+.dome2 {
+   box-shadow: -2px 0 0 green, //左边阴影
+   0 -2px 0 blue, //顶部阴影
+   0 2px 0 red, //底部阴影
+   2px 0 0 yellow; //右边阴影
+ }
+ 变成阴影效果：
+.demo3 {
+	box-shadow: -2px 0 5px green,0 -2px 5px blue,0 2px 5px red,2px 0 5px yellow;
+}
+
+		</pre>
+	</div>
+	<div class="drop-shadow"></div>
+	<div class="shadow"></div>
+	<div class="layout">
+		<h1>CSS3 Transform </h1>
+		<pre class="prettyprint linenums">
+语法：
+transform ： none | &lt;transform-function&gt; [ &lt;transform-function&gt; ]* 
+也就是：
+transform: rotate | scale | skew | translate |matrix;
+
+一、旋转rotate
+
+	transform: rotate(30deg)  //正数表示顺时针，负数表示逆时针
+</pre>
+<style>
+	.rotate {width: 180px; height: 130px; padding: 10px; background-color: #f60; transform: rotate(30deg); margin: 50px 0}
+</style>
+<div class="rotate">transform: rotate(30deg)</div>
+<pre class="prettyprint linenums">
+二、移动translate
+
+	transform:translate(100px,20px)
+
+	//translate(x,y),它表示对象进行平移，按照设定的x,y参数值,当值为负数时，反方向移动物体，其基点默认为元素 中心点，也可以根据transform-origin进行改变基点
+
+	transform:translateX(100px)
+	transform:translateY(20px)
+</pre>
+<style>
+	.translate {width: 180px; height: 130px; padding: 10px; background-color: #f60; transform: translate(100px,20px); margin: 50px 0}
+</style>
+<div class="translate">transform:translate(100px,20px)</div>
+<pre class="prettyprint linenums">
+三、缩放scale
+
+	transform:scale(2,1.5)
+
+	//基中X表示水平方向缩放的倍数，Y表示垂直方向的缩放倍数，而Y是一个可选参数，如果没有设置Y值，则表示X，Y两个方向的缩放倍数是一样的。
+
+	transform:scaleX(2)
+	transform:scaleY(2)
+</pre>
+<style>
+	.scale {width: 180px; height: 130px; padding: 10px; background-color: #f60; transform: scale(2,1.5); margin: 50px 0}
+</style>
+<div class="scale">transform:scale(2,1.5)</div>
+<pre class="prettyprint linenums">
+四、扭曲skew
+	
+	transform:skew(30deg,10deg)
+
+	//	skew是用来对元素进行扭曲变行，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。其中第二个参数是可选参数，如果没有设置第二个参数，那么Y轴为0deg
+
+	transform:skewX(30deg)
+	transform:skewY（10deg）
+</pre>
+<style>
+	.skew {width: 180px; height: 130px; padding: 10px; background-color: #f60; transform:skew(30deg,10deg); margin: 50px 0}
+</style>
+<div class="skew">transform:skew(30deg,10deg)</div>
+<span class="alert-info">原理说明:</span>
+<img src="css/img/skew-x-y.png">
+<pre class="prettyprint linenums">
+五、矩阵matrix
+	
+	matrix(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;) ： 以一个含六值的(a,b,c,d,e,f)变换矩阵的形式指定一个2D变换，相当于直接应用一个[a b c d e f]变换矩阵。就是基于水平方向（X轴）和垂直方向（Y轴）重新定位元素,此属性值使用涉及到数学中的矩阵
+
+改变元素基点transform-origin
+
+	transform-origin(X,Y):用来设置元素的运动的基点（参照点）。默认点是元素的中心点。其中X和Y的值可以是百分值,em,px，其中X也可以是字符参数值left,center,right；Y和X一样除了百分值外还可以设置字符值top,center,bottom，这个看上去有点像我们background-position设置一样
+
+示例：
+	transform: matrix(1,1,-1,0,0,0);
+	-moz-transform: rotate(45deg) scale(0.8,1.2) skew(60deg,-30deg);
+   -webkit-transform: rotate(45deg) scale(0.8,1.2) skew(60deg,-30deg);
+   -o-transform: rotate(45deg) scale(0.8,1.2) skew(60deg,-30deg);
+   -ms-transform: rotate(45deg) scale(0.8,1.2) skew(60deg,-30deg);
+   transform: rotate(45deg) scale(0.8,1.2) skew(60deg,-30deg);
+		</pre>
+<style>
+	.matrix {width: 180px; height: 130px; padding: 10px; background-color: #f60; transform:matrix(1,1,-1,0,0,0); margin: 50px 0}
+</style>
+<div class="matrix">transform:matrix(1,1,-1,0,0,0)</div>
+	</div>
+	<div class="layout">
+		<h1>CSS3 Transition</h1>
+		<pre class="prettyprint linenums">
+语法：transition ： [&lt;'transition-property'&gt; || &lt;'transition-duration'&gt; || &lt;'transition-timing-function'&gt; || &lt;'transition-delay'&gt; [, [&lt;'transition-property'&gt; || &lt;'transition-duration'&gt; || &lt;'transition-timing-function'&gt; || &lt;'transition-delay'&gt;]]* 
+transition主要包含四个属性值：
+执行变换的属性：transition-property,
+变换延续的时间：transition-duration,
+在延续时间段，变换的速率变化transition-timing-function,
+变换延迟时间transition-delay。
+		</pre>
+		<blockquote>一、transition-property</blockquote>
+		<pre class="prettyprint linenums">
+transition-property ： none | all | [ &lt;IDENT&gt; ] [ ',' &lt;IDENT&gt; ]*
+说明：
+transition-property是用来指定当元素其中一个属性改变时执行transition效果，其主要有以下几个值：none(没有属性改变)；all（所有属性改变）这个也是其默认值；indent（元素属性名）。当其值为none时，transition马上停止执行，当指定为all时，则元素产生任何属性值变化时都将执行transition效果，ident是可以指定元素的某一个属性值。
+		</pre>
+		<blockquote>二、transition-duration</blockquote>
+		<pre class="prettyprint linenums">
+transition-duration ： &lt;time&gt; [, &lt;time&gt;]* 
+说明：
+transition-duration是用来指定元素 转换过程的持续时间，取值：&lt;time&gt;为数值，单位为s（秒）或者ms(毫秒),可以作用于所有元素，包括:before和:after伪元素。其默认值是0，也就是变换时是即时的。
+		</pre>
+		<blockquote>三、transition-timing-function</blockquote>
+		<pre class="prettyprint linenums">
+transition-timing-function ： ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;) [, ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;)]*
+说明：
+transition-timing-function的值允许你根据时间的推进去改变属性值的变换速率，transition-timing-function有6个可能值：
+1、ease：（逐渐变慢）默认值，ease函数等同于贝塞尔曲线(0.25, 0.1, 0.25, 1.0)
+2、linear：（匀速），linear 函数等同于贝塞尔曲线(0.0, 0.0, 1.0, 1.0)
+3、ease-in：(加速)，ease-in 函数等同于贝塞尔曲线(0.42, 0, 1.0, 1.0)
+4、ease-out：（减速），ease-out 函数等同于贝塞尔曲线(0, 0, 0.58, 1.0)
+5、ease-in-out：（加速然后减速），ease-in-out 函数等同于贝塞尔曲线(0.42, 0, 0.58, 1.0)
+6、cubic-bezier：（该值允许你去自定义一个时间曲线）， 特定的cubic-bezier曲线。 (x1, y1, x2, y2)四个值特定于曲线上点P1和点P2。所有值需在[0, 1]区域内，否则无效。
+		</pre>
+		<blockquote>四、transition-delay</blockquote>
+		<pre class="prettyprint linenums">
+transition-delay ： &lt;time&gt; [, &lt;time&gt;]* 
+说明：
+transition-delay是用来指定一个动画开始执行的时间，也就是说当改变元素属性值后多长时间开始执行transition效果，其取值：<time>为数值，单位为s（秒）或者ms(毫秒)，其使用和transition-duration极其相似，也可以作用于所有元素，包括:before和:after伪元素。 默认大小是"0"，也就是变换立即执行，没有延迟。
+
+有时我们不只改变一个css效果的属性,而是想改变两个或者多个css属性的transition效果，那么我们只要把几个transition的声明串在一起，用逗号（“，”）隔开，然后各自可以有各自不同的延续时间和其时间的速率变换方式。但需要值得注意的一点：transition-delay与transition-duration的值都是时间，所以要区分它们在连写中的位置，一般浏览器会根据先后顺序决定，第一个可以解析为时间的怭值为transition-duration第二个为transition-delay。如：
+a {
+    -moz-transition: background 0.5s ease-in,color 0.3s ease-out;
+    -webkit-transition: background 0.5s ease-in,color 0.3s ease-out;
+    -o-transition: background 0.5s ease-in,color 0.3s ease-out;
+    transition: background 0.5s ease-in,color 0.3s ease-out;
+  }
+		</pre>
+		<style>
+		.transition {width: 200px; height: 150px; background-color: #f60; color: #333; transition: all .5s ease-in 1s;}
+		.transition:hover {background-color: #f00; color: #fff; font: normal 16px Microsoft yahei; border-radius: 10px;}
+		</style>
+		<div class="transition">transition: all .5s ease-in 1s</div>
+	</div>
+	<div class="layout">
+		<h1>CSS3 Animation </h1>
+		<pre class="prettyprint linenums">
+语法：
+@keyframes IDENT {
+ from {
+   Properties:Properties value;
+ }
+ Percentage {
+   Properties:Properties value;
+ }
+ to {
+   Properties:Properties value;
+ }
+}
+或者全部写成百分比的形式：
+@keyframes IDENT {
+  0% {
+     Properties:Properties value;
+  }
+  Percentage {
+     Properties:Properties value;
+  }
+  100% {
+     Properties:Properties value;
+  }
+}
+
+示例：
+
+@-webkit-keyframes 'wobble' {
+ 0% {
+    margin-left: 100px;
+    background: green;
+ }
+ 40% {
+    margin-left: 150px;
+    background: orange;
+ }
+ 60% {
+    margin-left: 75px;
+    background: blue;
+ }
+ 100% {
+    margin-left: 100px;
+    background: red;
+ }
+}
+
+元素调用：
+
+.animation {
+     width: 50px;
+     height: 50px;
+     margin-left: 100px;
+     background: blue;
+     -webkit-animation-name:'wobble';/*动画属性名，也就是我们前面keyframes定义的动画名*/
+     -webkit-animation-duration: 10s;/*动画持续时间*/
+     -webkit-animation-timing-function: ease-in-out; /*动画频率，和transition-timing-function是一样的*/
+     -webkit-animation-delay: 2s;/*动画延迟时间*/
+     -webkit-animation-iteration-count: 10;/*定义循环次数，infinite为无限次*/
+     -webkit-animation-direction: alternate;/*定义动画方*/
+  }
+		</pre>
+		<blockquote>一、animation-name</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-name: none | IDENT[,none | IDENT]*;
+说明：
+animation-name:是用来定义一个动画的名称，其主要有两个值：IDENT是由Keyframes创建的动画名，换句话说此处的IDENT要和Keyframes中的IDENT一致，如果不一致,将不能实现任何动画效果；none为默认值，当值为none时，将没有任何动画效果。另外我们这个属性跟前面所讲的transition一样，我们可以同时附几个animation给一个元素，我们只需要用逗号“，”隔开。
+		</pre>
+		<blockquote>二、animation-duration</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-duration: &lt;time&gt;[,&lt;time&gt;]*
+说明：
+animation-duration是用来指定元素播放动画所持续的时间长，取值:&lt;time&gt;为数值，单位为s （秒.）其默认值为“0”。这个属性跟transition中的transition-duration使用方法是一样的。
+		</pre>
+		<blockquote>三、animation-timing-function</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-timing-function:ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;) [, ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;)]* 
+说明：
+animation-timing-function:是指元素根据时间的推进来改变属性值的变换速率，说得简单点就是动画的播放方式。他和transition中的transition-timing-function一样，具有以下六种变换方式：ease;ease-in;ease-in-out;linear;cubic-bezier。
+		</pre>
+		<blockquote>四、animation-delay</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-delay: &lt;time&gt;[,&lt;time&gt;]*
+说明：
+animation-delay:是用来指定元素动画开始时间。取值为<time>为数值，单位为s(秒)，其默认值也是0。这个属性和transition-delayy使用方法是一样的。
+		</pre>
+		<blockquote>五、animation-iteration-count</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-iteration-count:infinite | &lt;number&gt; [, infinite | &lt;number&gt;]* 
+说明： 
+animation-iteration-count是用来指定元素播放动画的循环次数，其可以取值&lt;number&gt;为数字，其默认值为“1”；infinite为无限次数循环。
+		</pre>
+		<blockquote>六、animation-direction</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-direction: normal | alternate [, normal | alternate]*  
+说明： 
+animation-direction是用来指定元素动画播放的方向，其只有两个值，默认值为normal，如果设置为normal时，动画的每次循环都是向前播放；另一个值是alternate，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。
+		</pre>
+		<blockquote>七、animation-play-state</blockquote>
+		<pre class="prettyprint linenums">
+语法： animation-play-state:running | paused [, running | paused]* 
+说明： 
+animation-play-state主要是用来控制元素动画的播放状态。其主要有两个值，running和paused其中running为默认值。他们的作用就类似于我们的音乐播放器一样，可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放，我们这里的重新播放不一定是从元素动画的开始播放，而是从你暂停的那个位置开始播放。另外如果暂时了动画的播放，元素的样式将回到最原始设置状态。这个属性目前很少内核支持，所以只是稍微提一下。
+		</pre>
+		<style>
+@-webkit-keyframes 'wobble' {
+	 0% {
+	    margin-left: 100px;
+	    background: green;
+	 }
+	 40% {
+	    margin-left: 150px;
+	    background: orange;
+	 }
+	 60% {
+	    margin-left: 75px;
+	    background: blue;
+	 }
+	 100% {
+	    margin-left: 100px;
+	    background: red;
+	 }
+}
+.animation {
+     width: 50px;
+     height: 50px;
+     margin-left: 100px;
+     background: blue;
+     -webkit-animation-name:'wobble';/*动画属性名，也就是我们前面keyframes定义的动画名*/
+     -webkit-animation-duration: 10s;/*动画持续时间*/
+     -webkit-animation-timing-function: ease-in-out; /*动画频率，和transition-timing-function是一样的*/
+     -webkit-animation-delay: 2s;/*动画延迟时间*/
+     -webkit-animation-iteration-count: 10;/*定义循环资料，infinite为无限次*/
+     -webkit-animation-direction: alternate;/*定义动画方式*/
+  }
+		</style>
+		<div class="animation"></div>
+	</div>
+	<div class="layout">
+		<h1>css3 filter</h1>
+		<pre class="prettyprint linenums">
+语法：
+elm {
+    filter: none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]* 
+  }
+
+说明：
+其默认值是none，他不具备继承性，其中filter-function一个具有以下值可选：
+
+    grayscale灰度
+    sepia褐色（求专业指点翻译）
+    saturate饱和度
+    hue-rotate色相旋转
+    invert反色
+    opacity透明度
+    brightness亮度
+    contrast对比度
+    blur模糊
+    drop-shadow阴影
+
+示例： 
+.blur {    
+    -webkit-filter: blur(10px); /* Chrome, Opera */
+       -moz-filter: blur(10px);
+        -ms-filter: blur(10px);    
+            filter: blur(10px);    
+}
+兼容IE：
+/* IE6?~IE9 IE6未亲自测试，按照自己以前使用该滤镜实现投影效果的经验，IE6应该是支持的*/
+filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); 
+		</pre>
+		<blockquote>一、grayscale灰度</blockquote>
+		<pre class="prettyprint linenums">
+.grayscale{
+  -webkit-filter:grayscale(1);
+}
+说明： 
+使用这个特效，会把图片变成灰色的，也就是说你的图片将只有两种颜色“黑色”和“白色”
+默认值：100％，
+如果你在grayscale()中没有任何参数值，将会以“100%”渲染。
+		</pre>
+		<style>
+		.grayscale{
+		  -webkit-filter:grayscale(1);
+		}
+		</style>
+		<img src="css/img/skew-x-y.png" class="grayscale">
+		<blockquote>二、sepia</blockquote>
+		<pre class="prettyprint linenums">
+.sepia{
+  -webkit-filter:sepia(1);
+} 
+说明：
+sepia不知道如何译，暂时就叫他“褐色”，使用这种效果，你的图片好像很古老的一样
+		</pre>
+		<style>
+		.sepia{
+	          -webkit-filter:sepia(1);
+	      }   
+		</style>
+		<img src="css/img/skew-x-y.png" class="sepia">
+		<blockquote>三、saturate饱和度</blockquote>
+		<pre class="prettyprint linenums">
+.saturate{
+ -webkit-filter:saturate(0.5);
+}
+说明：
+saturat是用来改变图片的饱和度
+		</pre>
+		<style>
+		.saturate{
+	          -webkit-filter:saturate(0.5);
+	      }   
+		</style>
+		<img src="css/img/skew-x-y.png" class="saturate">
+		<blockquote>四、hue-rotate色相旋转</blockquote>
+		<pre class="prettyprint linenums">
+.hue-rotate{
+   -webkit-filter:hue-rotate(90deg);
+}
+说明：
+hue-rotate用来改变图片的色相
+默认值：0deg
+		</pre>
+		<style>
+		.hue{
+	          -webkit-filter:hue-rotate(90deg);
+	      }   
+		</style>
+		<img src="css/img/skew-x-y.png" class="hue">
+		<blockquote>五、invert反色</blockquote>
+		<pre class="prettyprint linenums">
+.invert{
+    -webkit-filter:invert(1);
+}
+说明：
+invert做出来的效果就像是我们照相机底面的效果一样
+默认值：100％
+		</pre>
+		<style>
+		.invert{
+		    -webkit-filter:invert(1);
+		}  
+		</style>
+		<img src="css/img/skew-x-y.png" class="invert">
+
+		<blockquote>六、opacity透明度</blockquote>
+		<pre class="prettyprint linenums">
+.opacity{
+-webkit-filter:opacity(.2);
+}
+说明：
+这个就很好理解了，改变图片的透明度
+默认值：100％
+		</pre>
+		<style>
+		.opacity{
+	        -webkit-filter:opacity(.2);
+	      } 
+		</style>
+		<img src="css/img/skew-x-y.png" class="opacity">
+
+		<blockquote>七、brightness亮度</blockquote>
+		<pre class="prettyprint linenums">
+.brightness{
+    -webkit-filter:brightness(.5);
+}
+说明：
+改变图片的亮度
+默认值：100％
+		</pre>
+		<style>
+		.brightness{
+		    -webkit-filter:brightness(.5);
+		} 
+		</style>
+		<img src="css/img/skew-x-y.png" class="brightness">
+
+		<blockquote>八、contrast对比度</blockquote>
+		<pre class="prettyprint linenums">
+.contrast{
+    -webkit-filter:contrast(2);
+}
+说明：
+改变图片的对比度，整个psd的，都懂这个意思
+默认值：100％
+		</pre>
+		<style>
+		.contrast{
+            -webkit-filter:contrast(2);
+        }
+		</style>
+		<img src="css/img/skew-x-y.png" class="contrast">
+
+		<blockquote>九、blur模糊</blockquote>
+		<pre class="prettyprint linenums">
+.blur{
+    -webkit-filter:blur(3px);
+}
+说明：
+一看字面意思就知道了，改变图片的清晰度
+默认值：0
+		</pre>
+		<style>
+		.blur {    
+		    -webkit-filter: blur(5px); /* Chrome, Opera */
+		       -moz-filter: blur(10px);
+		        -ms-filter: blur(10px);    
+		            filter: blur(10px);    
+		}
+		</style>
+		<img src="css/img/skew-x-y.png" class="blur">
+
+		<blockquote>十、drop-shadow阴影</blockquote>
+		<pre class="prettyprint linenums">
+.drop-shadow{
+    -webkit-filter:drop-shadow(5px 5px 5px #ccc);
+}
+说明：
+这个很像box-shadow一样的效果，给图片加阴影效果
+默认值：100％
+		</pre>
+		<style>
+		._drop-shadow{
+		    -webkit-filter:drop-shadow(5px 5px 5px #ccc);
+		}
+		</style>
+		<img src="css/img/skew-x-y.png" class="_drop-shadow">
+		<pre class="prettyprint linenums">
+综合运用 filter :
+.custom{
+    -webkit-filter:saturate(5) hue-rotate(500deg) grayscale(0.3) sepia(0.7) contrast(1.5) invert(0.2) brightness(.9);
+}
+		</pre>
+	</div>
+	<div class="layout">
+		<h1>css3 border-color</h1>
+		<pre class="prettyprint linenums">
+.border-color {
+	width: 200px;
+	height: 100px;
+	border: 10px solid transparent;
+	border-radius: 15px 0 15px 0;
+	-moz-border-top-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+	-moz-border-right-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+	-moz-border-bottom-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+	-moz-border-left-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+}
+		</pre>
+		<style>
+		.border-color {
+			width: 200px;
+			height: 100px;
+			border: 10px solid transparent;
+			border-radius: 15px 0 15px 0;
+			border-top-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+			border-right-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+			border-bottom-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+			border-left-colors:#a0a #909 #808 #707 #606 #505 #404 #303;
+		}
+		</style>
+		<div class="border-color"></div>
+	</div>
+		<script>seajs.use('./js/init');</script>
+	</body>
+
+</html>
