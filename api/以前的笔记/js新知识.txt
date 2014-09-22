@@ -1,0 +1,1112 @@
+js获取内联样式的值，即style中的值
+采用 obj.style.width
+
+也可以
+	obj.style["width"] = "500px"  给obj设置style的值width = 500px
+	obj.style["width"] 获取style行内元素的值
+	
+	or
+	obj.style.cssText = "width : 500px; height : 300px; background : orange";
+
+获取外部或内部样式表中的样式(<link>或<style>)
+IE && OPERA :
+		obj.currentStyle["width"]		//得到的值都是小于1的值
+其他标准浏览器:
+		getComputedStyle(obj,伪元素(:hover) : null)["width"]
+	or	document.defaultView.getComputedStyle(obj,伪元素(:hover) : null)["width"]	//得到的值都是小于1的值
+	or	var example = document.defaultView.getComputedStyle(obj,null);		//得到的值都是小于1的值
+		example.getPropertyValue("width");
+
+注意：
+currentStyle和getComputedStyle只能用于获取页面元素的样式，不能用来设置相关值。
+
+IE获取backgroundColor是颜色的值,Mozilla获取的是rgb()
+
+IE下的css表达式: _width : expression(this.parentNode.clientWidth);
+
+Math.abs(num) 获取num的绝对值
+
+with(obj.style){ width = "200px"; height = "150px"; background = "blue";}
+		
+
+//给对象设置多个函数的方法
+function setMoreFun(){
+	var foo = function(){};
+	foo.prototype.init = function(xxx){...};
+	foo.prototype.run = function(zzz){...};
+	return foo;
+}
+//使用方法
+var test = new setMoreFun();
+test.init(xxx);
+
+//关于window.open打开一个新窗口
+window.open("打开一个新窗口子窗口.html","_blank",
+	"toolbar=no, 
+	location=no, 
+	directories=no, 
+	status=yes, 
+	menubar=no, 
+	scrollbars=yes, 
+	resizable=yes, 
+	copyhistory=no,
+	top=0,left=0, 
+	width="+(screen.availWidth)+", 	
+	height="+(screen.availHeight)+"
+	");
+//打开一个新窗口时，并关闭父窗口,不提示是否需要关闭
+window.opener=null;window.open('','_self');window.close();
+
+
+//事件捕捉函数
+setCapture是针对一个容器container对容器里面的对象进行捕捉事件,releaseCapture()是释放事件
+
+//关于Math数字的舍入问题
+Math.ceil()	向上舍入
+Math.floor()	向下舍入
+Math.round()	四舍五入
+Math.random()	0-1随机数
+Math.pow(x,y)	计算x的y次方
+
+
+//关于排序
+1、快速排序	原理:取数组的中间位置，得到那个索引(index)和值(value)，将这个值作为一直参考对象pivot，通过将数组里面的值一一和参考对象作比较，比它小的放在左边，比它大的放在右边,然后递归一下这个函数，然后用数组连接concat将left,pivot,right组合起来就是一个新的已经拍好序的数组了
+
+例如:
+		var arr = [3,6,5,9,2,8,1,7,4];
+		function quickSort(arr){
+			if(arr.length <= 1) {return arr;}
+			var pivotIndex = Math.floor(arr.length/2);
+			var pivot = arr.splice(pivotIndex,1)[0];
+			var left = [], right = [];
+			for(var i = 0; i < arr.length; i++){
+				if(pivot > arr[i]){
+					left.push(arr[i]);
+				}
+				else{
+					right.push(arr[i]);
+				}
+			}
+			return quickSort(left).concat([pivot],quickSort(right));
+		}
+		alert(quickSort(arr));
+
+2、冒泡排序	原理:比较length轮，每一轮都把最大的数放在数组的末端，并交换它们的位置
+
+例如:		function bubbleSort(arr){
+			if(arr.length <= 1) return arr;
+			var i,j,tem;
+			for(i = 0; i <= arr.length-2; i++){
+				for(j = arr.length-1; j >= 1; j--){
+					if(arr[j] < arr[j-1]){
+						tem = arr[j];
+						arr[j] = arr[j-1];
+						arr[j-1] = tem;
+					}
+				}
+			}
+			return arr;
+		}
+
+3、如何打乱数组里面值的顺序	原理:sort函数里面有个参数，这个参数就是function
+
+例如:		function randomsort(a,b){
+			return Math.random() > 0.5 ? -1 : 1;
+		}
+
+		alert(arr.sort(randomsort));
+
+ps:函数randomsort接受两个参数a,b.代表每次排序比较时的两个数组项,sort函数每次执行时都会调用randomsort这个函数来处理
+   关于参数a,b:如果返回1就交换a,b的顺序，否则就不交换
+
+拓展：function asc(a,b){ return a < b ? -1 : 1;} 升序
+      function desc(a,b){ return a > b ? -1 : 1;} 降序
+      function oddAndEven(a,b){ if(a % 2 == 0) return 1; else return -1;} 奇数排前偶数//排后
+
+给中文排序,FF好像不支持 : function(a , b){return a.localeCompare(b);}
+
+//关于获取鼠标的位置
+
+	function getMousePosition(e){
+		var event = e || window.event;
+		if(event.pageX || event.pageY){
+			return {x : event.pageX, y : event.pageY};
+		}
+		else{
+			return {
+				  x : event.clientX + document.body.scrollLeft - document.body.clientLeft,
+				  y : event.clientY + document.body.scrollTop - document.body.clientTop
+				};
+		}
+	}
+
+//关于拖动层布局的思路
+
+网址(website)http://www.aspxhome.com/javascript/program/20085/391530.htm
+
+//关于offsetParent,这是一个判断元素的父元素有木有采取定位(relative,absolute) ,如果父元素采取了定位那么obj.offsetParent ? 父元素 : body	但是对于table来说  td内的元素对应td，td ==>tr tr==>table,不管table是否采用了定位
+
+//关于call,apply 
+Array.prototype.slice.call(array,1);	其实理解这句话的时候并不难,它是指运用数组的方法slice对array数组进行操作
+String.prototype.split.call(str,"");	这是使用字符串的方法split对str进行分割成数组
+
+
+//关于节点的前插入(insertBefore)和后插入(insertAfter)
+	var div = document.getElementById("id");
+	var p = document.createElement("p");
+	p.innerHTML = "this is a p Element";
+	
+	//前插入	例如: 要插入的目标.insertBefore(要插入的对象,要插入的位置);
+	div.insertBefore(p,div.childNodes[0]);
+
+	//后插入(insertAfter)
+	  function insertAfter(newEl,targetEl){
+		var parentEl = targetEl.parentNode;
+		if(parentEl.lastChild == targetEl){
+			parentEl.appendChild(newEl);
+		}
+		else{
+			parentEl.insertBefore(newEl,targetEl.nextSibling);
+		}	
+	  }
+
+//关于面向对象及apply,原型的综合应用
+	//创建类的方法create
+	var Class = {
+		create : function(){
+			return function(){ this.initialize.apply(this,arguments);};
+		}
+	};
+	//创建一个类名叫test
+	var test = Class.create();
+
+	//test == function(){ this.initialize.apply(this,arguments);};
+	
+	var test = function(){};
+	test.prototype = {
+		initialize : function(num1,num2){
+			this.add.call(this,num1,num2);
+		}
+		add : function(a,b){
+			alert(a + b);
+		}
+	};	
+	var t = new test(1,2);
+	//this.initialize.apply(...);里的this == test
+	// t == test.prototype  typeof t == "Object"
+	alert(t.add(2,3));
+
+//针对IE的css条件注释写法
+
+	<!--[if !IE]>除IE外都可以识别<![endif]-->
+	<!--[if IE]> 所有的IE可识别 <![endif]-->
+ 	<!--[if IE 5.0]> 只有IE5.0可以识别 <![endif]-->
+
+//css的hack写法
+
+ 第一种：
+ .div {
+ background:orange;
+ *background:green !important;
+ *background:blue;
+ }
+ 第二种：
+ .div {
+ margin:10px;
+ *margin:15px;
+ _margin:15px;
+ }
+ 第三种：
+ #div { color: #333; }
+ *+html #div { color: #999; }
+ * html #div { color: #666; }
+
+
+//关于用js写的设置首页和加入收藏的代码
+
+	// 设置首页
+	function setHomepage(){
+		if (document.all) {
+			document.body.style.behavior = "url(#default#homepage)";
+			document.body.setHomePage(location.href);
+		}
+		else if (window.sidebar){
+			if (window.netscape) {
+				try {
+					netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+				}
+				catch (e) {
+					//alert("该操作被浏览器拒绝，如果想启用该功能，请在地址栏内输入 about:config,然后将项 											signed.applets.codebase_principal_support 值该为true");
+					alert("您的浏览器未启用该功能.");
+				}
+			}
+			var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+			prefs.setCharPref('browser.startup.homepage',location.href);
+		}
+	}
+
+	// 加入收藏夹
+	function addFav() {
+		if (document.all) {
+			window.external.addFavorite(location.href,document.title);
+		}else if (window.sidebar) {
+			window.sidebar.addPanel(document.title,location.href, "");
+		}
+	}
+	function AddFavorite(sURL, sTitle) 
+	{ 
+    		try{ 
+        	     window.external.addFavorite(sURL, sTitle); 
+    		} 
+    		catch (e) 
+    		{ 
+        	    try{ 
+            		window.sidebar.addPanel(sTitle, sURL, ""); 
+        	    } 
+        	    catch (e) 
+        	   { 
+            		alert("加入收藏失败，请使用Ctrl+D进行添加"); 
+        	   } 
+    		} 
+	}
+
+//关于this
+
+	function a(){
+	    alert(this);	//this == window
+	}
+	a.call(null);	//在使用call的时候参数如果是null或者是undefined的时候那么传给函数的this则为window
+	
+	另例：
+	function run(a , b){
+		if((a + b) <= 0){
+			return false;
+		}
+		else{
+			return a + b;
+		}
+	}
+	var result = run.call(this , 0 , 0); 这样就得到一个返回值，可以
+	
+
+//关于闭包(点击第一个段落的时候弹出1，点击第二个段落的时候弹出2，以此类推...)
+
+	var p = document.getElementsByTagName("p");
+	for(var i = 0 ; i < p.length ; i++){
+		p[i].onclick = (function(index){
+			return function(){return index+1;};
+		})(i);
+	}
+	
+	或者
+
+	var p = document.getElementsByTagName("p");
+	for(var i = 0 ; i < p.length ; i++){
+		p[i].index = i;
+		p[i].onclick = function(){return this.index+1;};
+	}
+
+//关于link或style的css规则
+
+	var sheet = document.styleSheets[num];	//num是指在document中的第几个css规则(包括link,style)
+	//W3C
+	sheet.insertRule(selectorText + "{" + cssText + "}" + position);
+
+	//IE
+	sheet.addRule(selectorText , cssText , position);
+
+//关于获取浏览器大小问题
+
+	//W3C
+	var documentWidth = document.documentElement.clientWidth;
+	var documentHeight = document.documentElement.clientHeight;
+
+	//FF
+	var documentWidth = window.innerWidth;
+	var documentHeight = window.innerHeight;
+	
+//关于javascript动画函数编写
+
+	var fx = function (ontween, onend, duration) {
+        var pos, runTime,
+                startTime = + new Date,
+                timer = setInterval(function () {
+                        runTime = + new Date - startTime;
+                        pos = runTime / duration;
+
+                        if (pos >= 1) {
+                                clearInterval(timer);
+                                onend(pos);
+                        } else {
+                                ontween(pos);
+                        };
+                }, 13);
+	};
+	
+	var animate = function (elem, css, duration, callback) {
+			function ontween (pos) {
+					var obj, val, form, to, name, unit,
+							i = 0, len = css.length;
+
+					for (; i < len; i++) {
+							obj = css[i];
+							from = obj[0];
+							to = obj[1];
+							name = obj[2];
+							unit = obj[3];
+
+							val = from + (to - from) * pos;
+							elem.style[name] = val + unit;
+					};
+			};
+
+			function onend (pos) {
+					ontween(pos);
+					callback.call(elem);
+			};
+
+			fx(ontween, onend, duration);        
+	};
+	
+	//如何调用?
+	
+	document.getElementById('fx').onclick = function () {
+        animate(this, [
+                [150, 500, 'width', 'px'],
+                [150, 300, 'height', 'px'],
+                [150, 300, 'lineHeight', 'px'],
+                [20, 60, 'top', 'px'],
+                [20, 350, 'left', 'px'],
+                [12, 36, 'fontSize', 'px']
+        ], 400, function () {
+                this.innerHTML = 'FX {BY TANGBIN}';
+        });
+	};
+
+	
+//关于js单例模式，即只执行一次，不可重复执行
+	//创建单例模式
+	var single = function(fn){
+		var isExist;		//单例模式用到的临时变量，用来存储是否执行了一次操作
+		
+		return function(){
+			if(isExist){
+				return isExist;
+			}
+			else{
+				isExist = fn.apply( this , arguments );	//this指向的是window,arguments = [];
+			}
+		};
+	}
+	
+	//执行操作
+	var run =  single(function(){	//run() = function(){if()...else...}(); 得到值isExist;并且执行fn.apply函数
+		return document.body.appendChild( document.createElement( "div" ) );
+	});
+	
+	//页面操作
+	document.getElementById("button").onclick = function(){
+		run();		//执行run方法
+	};
+	
+	
+//封装new一个对象的方法，优化内存
+	 //创建一个new的方法，模拟new出一个对象
+	 //obj：需要new出来的对象,params:附带的参数
+	 function New(obj,params){
+		function _new(){	//创建临时函数用来初始化obj传来的参数
+			obj.initialize.apply(this,params);		//this:window,params:[Mr Lee,23]
+		}
+		_new.prototype = obj;		//将这个临时函数的原型指向obj对象,让_new对象具备obj所有的方法和属性
+		return new _new();			//最后返回这个临时函数的实例
+	 }
+	 var person = {
+		initialize : function( name , age ){
+			this.name = name;
+			this.age = age;
+		},
+		say : function(){
+			alert( "my name is " + this.name + " and my age is " + this.age );
+		}
+	 };
+	 
+	 var per1 = New( person , [ "Mr Lee" , 23 ] );	//通过New方法new出来一个对象per1，所以per1具有add,say的方法
+	 per1.say();	//输出: my name is Mr Lee and my age is 23
+	
+	
+//关于call,apply的理解
+	http://hszy00232.blog.163.com/blog/static/43022753201131835653841/
+
+
+//关于首页图片自动滚动
+	$("box").auto_play();
+	$.fn.extend({
+		auto_play : function(){
+			var _this = $(this),timer,c_idx = 1,
+				total = _this.find("span").length;		//得到span图片的总长度
+			//第一次加载的时候显示第一张图片和标签1的数字
+			_this.find("span[rel=1]").show();
+			_this.find("ul li[rel=1]").addClass("active");
+			//每隔5秒执行一次自动滚动
+			timer = setInterval(tem = function(){
+				//当滚动到最后一张图片的时候，让它跳转到第一张图片去
+				if(c_idx == total){
+					c_idx = 1;
+				}
+				//滚动函数执行的时候，按照顺序依次执行
+				else{
+					c_idx++;
+				}
+				//当鼠标移动到图片的时候停止执行这个函数,鼠标移开继续执行函数
+				_this.find("span[rel='"+c_idx+"']").hover(function(){	//鼠标划过的时候
+					clearInterval(timer);
+				},function(){		//鼠标移开的时候
+					setInterval("tem()" , 5000);
+				});
+				
+				//当鼠标移动到数字的时候停止执行这个函数,鼠标移开继续执行函数
+				_this.find("ul li[rel='"+c_index+"']").hover(function(){
+					_this.find("ul li[rel!='"+c_index+"']").removeClass("active");
+					clearInterval(timer);
+				},function(){
+					setInterval("tem()",5000);
+				});
+			},5000);
+		}
+	});
+	
+	HTML : <div id="box">
+			 <div class="images">
+				<span rel="1"><img src="..." /></span>
+				<span rel="2"><img src="..." /></span>
+				<span rel="3"><img src="..." /></span>
+			 </div>
+			 <div class="active_ad">
+				<ul>
+					<li rel="1">1</li>
+					<li rel="2">2</li>
+					<li rel="3">3</li>
+				</ul>
+			 </div>
+		   </div>
+		   
+//关于js的hasOwnProperty和isPrototypeOf方法
+	/****************** hasOwnProperty ***************/
+	var demo = {
+		name : "wlq",
+		age : 23,
+		sex : "男",
+		birthday : "2012-12-12"
+	}
+	alert(demo.hasOwnProperty("name")); //true
+	alert(demo.hasOwnProperty("wlq"));	//false
+	/*************** isPrototypeOf *****************/
+	function Demo(name , age){
+		this.name = name;
+		this.age =  age;
+	}
+	Demo.prototype.setName = function(){};
+	Demo.prototype.setAge = function(){};
+	var demo1 = new Demo("wlq",23);
+	var demo2 = new Demo("jack",25);
+	alert(Demo.isPrototypeOf(demo1));	//true
+	alert(Demo.isPrototypeOf(demo2));	//true
+	
+	
+//关于3D标签云
+	假某一个元素的角度是α那么对应的各项值应该为： 
+	left: ( sin ( α) * 宽度半径 ) + 宽度半径 
+	top: ( cos ( α) * 高度半径 ) + 高度半径 
+	fontSize: ( cos( α) * 10 ) + 普通字号大小 
+	zIndex: ( cos( α) * 系数 ) + 值固定      //值注：正，放大的越大越好 
+	opacity: ( cos( α) / 系数 ) + ( 1 / ( 1- 系数 ) )      转注：比例算到 0 ～ 1 
+	
+	
+//关于arguments对象转换成数组
+	也即使用数组的方式将对象转换成数组
+	Array.prototype.slice.call(arguments);	//得到一个参数的数组,arguments是一个对象不能当成是数组
+	比如一个这样的函数:
+	var Bind = function(object , fun){
+		return function(){
+			fun.apply(object , arguments);
+		};
+	};
+	//带有事件e的参数
+	var BindAsEvent = function(object , fun){
+		var args = Array.prototype.slice.call(arguments).slice(2);	//转换成数组并删除目前这两个参数,得到最新加上去的参数
+		return function(e){
+			fun.apply(object , [e || window.event].concat(args));
+		};
+	};
+	//事件函数
+	function addEvent(o,t,f){return o.addEventListener ? o.addEventListener(t,f,false) : o.attachEvent("on" + t , f);}
+	function delEvent(o,t,f){return o.removeEventListener ? o.removeEventListener(t,f,false) : o.detachEvent("on" + t ,f);}
+	
+	//配合使用解决了fun里面的this指向兼容问题
+	如: var demo1 = BindAsEvent(o,fun);	addEvent(o,t,demo1); function fun(e){return this.tagName + e.clientX;}
+
+//关于如何判断是否为js对象，js数组
+	return isArray ? Object.prototype.toString.call(o) ["object Array"] : Object.prototype.toString.call(o) ["object object"];
+
+//关于js操作iframe
+	获取iframe内的window对象 : iframeElement.contentWindow
+	获取iframe内的document对象。IE、FF存在兼容问题
+	IE ：iframeElement.contentWindow.document	||	window.frames["iframeID || iframeName"].document
+	FF : iframeElement.contentDocument
+	
+//关于js闭包的认识
+	假如我们需要在每次循环的时候调用循环序号就要用到闭包
+	例如：
+		for(var i = 0 ; i < 10 ; i++){
+			(function(index){
+				setTimeout(function(){
+					alert(i);
+				} , 1000);
+			})(i)
+		}
+		
+//关于dom是否加载完成的判断
+	DOMContentLoaded = function(){	//common function
+		//W3C
+		if( doucment.addEventListener ){
+			document.addEventListener( "DOMContentLoaded" , DOMContentLoaded , false );
+			ready();
+		}
+		//IE
+		else if( document.readyState == "complete" ){
+			document.attachEvent( "onreadystatechange" , DOMContentLoaded );
+			ready();
+		}
+	};
+	
+		if( document.readyState == "complete" ){
+			setTimeout( ready );
+		}
+	
+	IE : 如果dom没有加载完成的情况下
+		//处理
+		if( document.attachEvent ){
+			document.attachEvent( "onreadystatechange" , DOMContentLoaded );
+			window.attachEvent( "onload" , ready );
+			
+			top = false; //初始化为false
+			isReady = false; //当dom还没有加载完成的时候
+			try{
+				top = window.frameElement == null && document.documentElement ;	//dom内不能有iframe
+			}catch(e){}
+			//判断
+			if( top && top.doScroll ){
+				(function doScrollCheck(){
+					if( !isReady ){
+						try{
+							top.doScroll("left");
+						}catch(error){
+							return setTimeout( doScrollCheck || arguments.callee /*匿名函数的时候可以用这个代替函数名 */ , 50 );
+						}
+					}
+				})();
+			}
+		}
+		
+		
+	W3C : 如果dom还没有加载完成的情况下
+		if( document.addEventListener ){
+			document.addEventListener( "DOMContentLoaded" , DOMContentLoaded , false );
+			window.addEventListener( "load" , ready , false );
+		} 
+	
+//关于jquery的extend及其深度复制  jquery 301行
+	var $ = function(){
+		var copyIsArray , 
+			toString = Object.prototype.toString,
+			hasOwn = Object.prototype.hasOwnPrototype,
+		//类型对象
+		class2type = {
+			'[object Boolean]' : 'boolean',  
+	        '[object Number]' : 'number',  
+	        '[object String]' : 'string',  
+	        '[object Function]' : 'function',  
+	        '[object Array]' : 'array',  
+	        '[object Date]' : 'date',  
+	        '[object RegExp]' : 'regExp',  
+	        '[object Object]' : 'object'  
+		},
+		//获取类型
+		type = function( obj ){
+			return obj == null ? String( obj ) : class2type[ toString.call( obj ) ] || "object";
+		},
+		//window对象
+		isWindow = function( obj ){
+			return obj && typeof obj === "object" && "setInterval" in window;
+		},
+		//数组
+		isArray = function( obj ){
+			return type( obj ) === "array" ;
+		},
+		//对象是否有属性
+		isPlainObject = function( obj ){
+			var key ;
+			if( !obj || type( obj ) !== "object" || obj.nodeType || isWindow( obj ) ){
+				return false;
+			}
+			
+			if( obj.constructor && !hasOwn.call( obj , "constructor" ) && !hasOwn.call( obj.constructor.prototype , "isPrototypeOf" ) ){
+				return false;
+			}
+			
+			for( key in obj ){}
+			
+			return key === undefined || hasOwn.call( obj , key );
+		},
+		//拷贝及深度拷贝
+		extend = function( deep , target , options ){
+			var name , src , copy , clone ;
+			if( !options ) return;
+			for( name in options ){
+				src = target[ name ];
+				copy = options[ name ];
+				
+				if( copy == target ) continue;
+				
+				if( deep && copy && ( isPlainObject( copy ) || ( copyIsArray = isArray( copy ) ) ) ){
+					if( copyIsArray ){
+						copyIsArray = false;
+						clone = src && isArray( src ) ? src : [];
+					}
+					else{
+						clone = src && isPlainObject( src ) ? src : {};
+					}
+					
+					target[ name ] = extend( deep , clone , copy );
+ 				}
+				else if( copy !== undefined ){
+					target[ name ] = copy ;
+				}
+			}
+			return target ;
+		};
+		
+		return { extend : extend };
+	}();
+	
+//关于对象和数组
+	例如:
+		var arr = [], i ,
+			arr1 = ["a" , "b"],
+			obj = {},
+			obj1 = {a : 1 , b : 2};
+		for( i in obj){ alert(obj[i]); } // 里面不能执行,obj1才执行里面的,用来判断对象内是否为空
+		
+//关于网上那些可以在线编辑代码可直接运行编辑后的代码的原理eval
+	<textarea cols=20 rows=6 overflow=auto id=run >alert("我运行了");</textarea>
+	<input type="button" value="运行代码" onclick="eval(document.getElementById('run').value)" />便可以直接运行
+
+//关于keydown和keypress的区别，它们很相似但是有个区别就是当用户按下键的时候如果不松开，keydown就触发一次,keypress连续触发
+
+//关于js取整, n = 3.26565 , 取整: ~~n , n>>0 , n<<0
+
+//关于js数组的操作slice方法
+	this.array = [数组];
+	slice(indexA , indexB)
+	if(indexA >= 0 && !indexB) return this.array[0 , index];	
+	if(indexA && indexB0) return this.array[indexA , indexB]; 
+	if(indexA < 0) return this.array[this.array.length + indexA , this.array.length];
+	
+//关于js数组的操作splice方法
+	this.array = [数组];
+	splice(index , count , elem1 , elem2 , ...nums);
+	index : 数组的下标
+	count: 数量 , elems1 , elem2: 要添加或插入进去的元素值
+	添加：this.array.splice(1 , 0 , 'a'); //在第二个位置上(index = 0)添加一个元素a
+	删除: this.array.splice(1 , 1); //删除第二个位置上的元素
+	修改：this.array.splice(1 , 1 , 'a'); //将第二个位置上的元素修改为a
+	
+//关于DOM操作节点的兼容问题
+	IE(6-8)          高级浏览器(IE9+,FF,..)
+	.firstChild        firstElementChild
+	.lastChild	   	   lastElementChild
+	.nextSibling	   nextElementSibling
+	.previousSibling   previousElementSibling
+	.childNodes		   children
+	
+//关于dom节点的插入
+	parentNode.appendChild(childNode) //往父节点的里面插入一个子节点，这个子节点就是lastChild
+	注意，这个appendChild的工作流程是先从父级把这个childNode删除然后再appendChild到parentNode中去
+	parentNode.insertBefore(childNode , whoNode) //在哪个节点之前插入whoNode,是在childNode里插入一个指定位置的节点
+	
+//关于table表格的应用
+	一个table中应该包含一个<thead> , <tfoot> ,以及多个<tbody>
+	so table.tbodies[0].rows[i].cells[i]
+	如果一个表格它有各行变色的功能，再加上一个鼠标mouseover,mouseout的功能，那它在鼠标mouseover的时候就应该把这行的颜色保存起来，放在mouseout里面去
+	
+//关于一个字符串的应用
+	string.search(char);
+	例如："hello world".search("e")  --> 返回一个1，即这个字符所在字符串的下标值
+	"hello world".search("1") --> 返回一个-1,即搜索不到这个字符
+	
+//关于表格排序的思想
+	trs.innerHTML -- 添加到一个数组中去, arrs;
+	arrs.sort(function(tr1 , tr2){
+		return tr1.innerHTML - tr2.innerHTML;
+	});
+	最后遍历这个排好序的arrs,让parentNode.appendChild(arrs[i]);就完成排序的功能
+	
+//关于js运动要注意的地方
+	1、首先开始的时候要关闭定时器
+	2、注意使用if/else
+		if(到达条件) clearInterval(定时器);
+		else 执行动画
+		
+		
+//关于js的parseFloat()方法,有一个BUG，即:parseFloat(0.07 * 100)的时候不是直接得出7而是7.000000001这个值
+	解决办法: Math.round(parseFloat(0.07 * 100));
+	
+//关于js的节点操作
+
+	function addEvent(obj , ev , fn){
+		obj.attachEvent ? obj.attachEvent("on" + ev , fn) : obj.addEventListener(ev , fn , false);
+	}
+	//怎样添加、移除、移动、复制、创建和查找节点
+	
+	//如何创建节点
+		var oUl = document.createElement("ul");
+		var oLi = document.createElement("li");
+	
+		addEvent(oLi , "mouseover" , function(){
+			alert("a");
+		});
+		oLi.innerHTML = "<a href='http://www.baidu.com'>百度</a>";
+		
+	//如何添加节点
+	//oUl.appendChild(oLi);
+	
+	//如何移除节点
+	oUl.removeChild(oLi);
+	
+	//如何移动节点
+	oUl.insertBefore(oUl.childNodes[0] , oLi);*/
+	
+	//如何复制节点
+		// cloneNode(param) IE7好像不支持，IE8以上支持,  这个参数默认是false, 表示只复制这个节点不复制子节点，true则相反
+		var cloned = oLi.cloneNode();	//IE8下参数是true时会复制事件
+		oUl.appendChild(cloned);
+		document.body || document.documentElement.appendChild(oUl);
+		
+	//如何查找节点
+		//通过id查找节点   document.getElementById();
+		//通过tagName查找节点  document.getElementsByTagName();
+		
+//关于ajax的原理性的东西
+	get:	容量小
+			安全性差
+			有缓存的
+			向服务器获取数据
+	
+	post:	容量大(2G)
+			安全性好一点
+			没有缓存
+			向服务器发送数据
+			
+//关于ajax获取本地数据
+		ajax("aa.txt?t=" + new Date().getTime() , function(data){
+			oDiv.innerHTML = "<img src='"+eval(data)[0].addr+"' class='imgs' />";
+		});
+		注意用到了 ?t= new Date().getTime()保证没有缓存,eval(data)使得data用js的方式输出来,而不是以字符串的形式
+		aa.txt : 
+				[
+					{
+						name : "wanglinquan",
+						age : 24,
+						pos : "web前端",
+						addr : "baidu_jgylogo3.gif"
+					},
+					{
+						name : "xiaqiong",
+						age : 22,
+						pos : "销售上万精英"
+					}
+				]
+				
+//关于js一个引用的问题
+	var arr1 = [1,2,3];
+	var arr2 = arr1;
+	
+	arr2.push(4);
+	alert(arr1);		//[1,2,3,4]
+	
+	why ? 其实很简单,arr2的指针指向了arr1,所以arr2 = arr1 = [1,2,3],他们都同时指向了这个数组,所以随便更改数组的长度，他们都会改变
+	
+	
+//关于js的一个方法setAttribute(attribute , value);
+
+	这个attribute可以是任何属性,包括class也可以设置，但是在包括IE7以下的都没有这个方法
+	
+//关于js的cookies
+	.特性: 容量小，有过期时间		var date = new Date();  data.setDate(8) -- 2013-6-8
+	var oDate = new Date(); 
+	oDate.setDate(oDate.getDate() + 14)
+	document.cookie = "user=wlq;expires=" + oDate;	//设置它的有效期是14天后过期
+	alert(document.cookie);
+	
+//判断图片在页面中是否已加载完成
+	IE : 
+		image.onload = function(){
+			if(image.complete == true){
+				alert("加载完成");
+			}
+			else{
+				alert("未完成");
+			}
+		}
+	FF : 
+		image.onreadystatechange = function(){
+			if(image.readyState == "complete"){
+				alert("加载完成");
+			}
+			else{
+				alert("未完成");
+			}
+		}
+
+//关于js的原型
+	A.prototype = B.prototype;
+
+	这是指a的实例可以调用B原型中的属性或方法,B却不可以调用A中原型的属性或方法
+	例如:
+	function A(){
+		this.name = "this is A";
+	}
+	A.prototype.showA = function(){
+		alert(this.name);
+	};
+	function B(){
+		this.name = "this is B";
+	}
+	B.prototype.showB = function(){
+		alert(this.name);
+	};
+	
+	A.prototype = B.prototype;
+	A.prototype = new B(); //A继承B
+	
+	var a = new A();
+	var b = new B();
+	
+	a.showA();	//错误
+	b.showA();	//错误
+	a.showB();	//this is A
+	b.showB();	//this is B
+	
+//关于ECMAScript5新特性 forEach(IE9+,高级浏览器支持)
+	解决不支持forEach的低端浏览器
+	if(!Array.prototype.forEach){
+		Array.prototype.forEach = function(fn){
+			var i = 0;
+			for(; i < this.length ; i++){
+				if(fn) fn(this[i] , i , this);
+			}
+		};
+	}
+	//使用实例
+	var arr = ["a" , "b" , "c"];
+	arr.forEach(function(items , index ,array){
+		//items : a , b , c
+		//index : 0 , 1 , 2
+		//array : [a,b,c] , [a,b,c] , [a,b,c]
+		alert(array);
+	});
+	
+//关于propertyIsEnumerable属性是否可以被枚举,判断是否为对象或实例对象
+	var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString'));	//false
+	var objs = {name : "wlq"};
+	var isEnumerable = objs.propertyIsEnumerable("name");
+	alert(isEnumerable);	//true
+	
+//关于对象创建的方式
+	.Object.create();	//IE9+,高级浏览器
+		Object.create(prototype, descriptors)	
+			prototype 必需。 要用作原型的对象。 可为 null。 
+			descriptors 可选。 包含一个或多个属性描述符的 JavaScript 对象。
+		返回值: 一个具有指定的内部原型且包含指定的属性（如果有）的新对象。
+		Object.create(null || 对象的原型 , {对象1 , 对象2 , 对象3 , ...});
+		例如：
+			var newObj = Object.create(null, {
+						size: {
+							value: "large",
+							enumerable: true
+						},
+						shape: {
+							value: "round",
+							enumerable: true
+						}
+					});
+			 
+			document.write(newObj.size + "<br/>");
+			document.write(newObj.shape + "<br/>");
+			document.write(Object.getPrototypeOf(newObj));
+			 
+			// Output:
+			// large
+			// round
+			// null
+	.自定义函数
+		Object.create = function(obj){		//第二步
+			var F = function(){};			//第三步
+			F.prototype = obj;				//第四步
+			return new F();					//第五步
+		};
+		
+		function Person(){
+			this.name = name;
+		}
+		
+		Person.prototype.run = function(){
+			return this.name + " can run...";
+		};
+		
+		var _obj = Object.create(new Person("wlq"));	//第一步
+		alert(_obj.run());	//wlq can run...			//第六步
+	解析这段代码:
+		第一步:创建一个Person实例即obj = new Person("wlq");
+		第二步:开始创建对象
+		第三步:创建一个新的函数对象F，则它自己会生成一个prototype对象p,p的__proto__对象指向Object.prototype
+		第四步:F的prototype对象指向转向了obj,所以p不会消失,因为它的__proto__指向了Object.prototype，
+				对象的__proto__链接是不能直接修改的,而函数对象的prototype属性是可以修改的
+		第五步:函数返回一个F的实例_obj,则F的对象就会消失,它自己原有的prototype对象p也消失了
+				可以看到obj的prototype对象指向了_obj,则_obj就可以使用obj里面的原型了
+		第六步:_obj.run();
+		
+Object.getPrototypeOf	//返回对象的原型
+	Object.getPrototypeOf(对象) === 对象.__proto__.prototype
+	例如：Object.getPrototypeOf(/reg/) === RegExp.prototype; //true
+		  Object.getPrototypeOf(new Error("error")) === Error.prototype; //true
+		  
+Object.getOwnPropertyDescriptor	//获取指定对象自己的属性描述符。 自己的属性描述符是直接在对象上定义的描述符，而不是从对象的原型继承的描述符。 
+	Object.getOwnPropertyDescriptor(object, propertyname)	
+		object    必需。 包含该属性的对象。 
+		propertyname	必需。 属性的名称。 
+	例如： 
+		var me = {
+			name : "wlq",
+			age : 23,
+			details : {
+				addr : "南坑村",
+				tel : "1546464654"
+			}
+		};
+
+		console.dir(Object.getOwnPropertyDescriptor(me , "name"));	
+		//output:
+			{
+				value : "wlq",
+				writable : true,
+				enumerable : true,
+				configurable : true
+			} 
+Object.defineProperty	//将属性添加到对象或修改现有属性的特性。
+	Object.defineProperty(object, propertyname, descriptor)
+	object   必需。 对其添加或修改属性的对象。 这可以是本机 JavaScript 对象（即用户定义的对象或内置对象）或 DOM 对象。
+	propertyname	必需。 一个包含属性名称的字符串。
+	descriptor	    必需。 属性的描述符。 它可以针对数据属性或访问器属性。 
+	返回值：已修改的对象。
+	例如： 
+		var obj = {};
+		Object.defineProperty(obj, "newDataProperty", {
+			value: 101,
+			writable: true,
+			enumerable: true,
+			configurable: true
+		});
+		
+Object.getOwnPropertyNames	//返回对象自己的属性的名称。 一个对象的自己的属性是指直接对该对象定义的属性，而不是从该对象的原型继承的属性。 对象的属性包括字段（对象）和函数。 
+	Object.getOwnPropertyNames(object)
+	object 必需。 包含自己的属性的对象。 
+	返回值：一个数组，其中包含对象自己的属性的名称。
+	例如：
+		var Person = function(name , age , height , sex){
+			this.name = name ;
+			this.age = age ;
+			this.height = height ;
+			this.sex = sex ;
+			this.toString = function(){
+				return (this.name + "," + this.age + "," + this.height + "," + this.sex);
+			};
+		};
+		var person = new Person("wlq" , 23 , "170cm" , "男");
+		var infos = Object.getOwnPropertyNames(person);
+		document.write(infos);	//name,age,height,sex,toString
+		
+//关于js1.6版本的Array.prototype.filter
+	Array.filter(function(curobj , curIndex , arr){} , context || this);
+	var arr = [1,2,3,4,5,6,7,8,9];
+	var k = arr.filter(function(curobj , curIndex , arr){
+		return curobj % 2 === 0 && curIndex > 4 ;
+	} , this);
+	console.info("k: " + k);	//6 8
+
+//关于对unicode的认识
+	它的正则表达式:	/\\u([a-f\d]{4})/ig
+	字符串转换:	
+	var str = /\\u([a-f\d]{4})/ig.exec("\\u627F")[1];
+	String.fromCharCode(parseInt(str , 16)); //承
+	
+//关于IE、ff下with、eval扰乱作用域链的问题
+	IE:	
+		运行eval()受到当前作用域限制,execScript()无视当前作用域,运行在全局作用域
+	FF:
+		eval == window.eval,很奇怪,eval受到当前作用域的限制,window.eval无视当前作用域,相当于IE下的execScript()
+		
+	with是不被推荐的，因为他操作作用域链（移进、移出，多累），执行效率低下。
+	
+	下面代码兼容各个浏览器:
+		(window.execScript || function(data){
+			window['eval'].call(window , data);
+		})(data);
+
+//关于js1.6版本的Array.prototype.indexOf
+	兼容版本:
+		indexOf = Array.prototype.indexOf ? function(item , arr){
+			return Array.prototype.indexOf.call(arr , item);
+		} : function(item , arr){
+			for(var i = 0 , len = arr.length ; i < len ; i++){
+				if(arr[i] == item){
+					return i;
+				}
+			}
+			return -1;
+		};
+		这样可以用一个统一的方法来实现浏览器都兼容的办法
+		indexOf(item , arr);
+		
+//关于js数组push和赋值方法效率的问题
+	var ret = [];
+		
+	for(var i = 0 ; i < arr.length; i++){
+		ret.push(arr[i]);	//效率低
+		ret[i] = arr[i];	//效率高
+	}
+	
+//模仿setTimeout函数
+	function setTimeout(fn , millSeconds){
+		var startTime = new Date().getTime();
+		
+		while(new Date().getTime() < startTime + millSeconds);
+		fn();
+	}
+	
+//关于js1.6版本的Array.prototype.map
+	兼容版本:
+		map = Array.prototype.map ? function(arr , fn , context || this){
+			return Array.prototype.map.call(arr , fn , context || this);
+		} : function(arr , fn , context || this){
+			var res = new Array(arr.length);
+			for(var i = 0 ; i < arr.length ; i++){
+				var el = typeof arr === "string" ? arr.charAt(i) : arr[i];
+				res[i] = fn.call(context || this , el , i , arr);
+			}
+			return res;
+		}
+		
+//关于encodeURIComponent(str)--函数可把字符串作为 URI 组件进行编码。
+
+//关于Element["ownerDocument"]	-- [Object Document]	-->	document.getElementById("test")["ownerDocument"]

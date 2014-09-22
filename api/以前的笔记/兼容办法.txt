@@ -1,0 +1,49 @@
+兼容办法
+区别IE6与FF： background:orange;*background:blue; 　　
+区别IE6与IE7： background:green !important;background:blue; 　　
+区别IE7与FF： background:orange; *background:green; 　　
+区别FF，IE7，IE6： background:orange;*background:green !important;*background:blue; 　　
+IE7,IE8兼容: <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 　
+
+select {
+background-color:red\0;  /* ie 8/9*/
+background-color:blue\9\0;  /* ie 9*/
+*background-color:#dddd00;  /* ie 7*/
+_background-color:#CDCDCD;  /* ie 6*/
+}
+
+　
+HEAD 　　
+1. CSS中几种浏览器对不同关键字的支持，可进行浏览器兼容性重复定义 !important 可被FireFox和IE7识别 * 可被IE6、IE7识别 _ 可被IE6识别 *+ 可被IE7识别 　　
+2. IE专用的条件注释 <!--其他浏览器 --> <link rel="stylesheet" type="text/css" href="css.css" /> <!--[if IE 7]> <!-- 适合于IE7 --> <link rel="stylesheet" type="text/css" href="ie7.css" /> <![endif]--> <!--[if lte IE 6]> <!-- 适合于IE6及一下 --> <link rel="stylesheet" type="text/css" href="ie.css" /> <![endif]--> 　　
+3. 几个浏览器对实际像素的解释 IE/Opera：对象的实际宽度 = (margin-left) + width + (margin-right) Firefox/Mozilla：对象的实际宽度= (margin-left) + (border-left-width) + (padding- left) + width + (padding-right) + (border-right-width) + (margin-right) 　　
+4. 鼠标手势问题：FireFox的cursor属性不支持hand，但是支持pointer，IE两个都支持；所以为了兼容都用pointer 　　
+5. FireFox中设置HTML标签的Style属性时，所有位置、宽高和尺寸值必须后跟px，IE也支持此写法，因此统一加px单位。如 Obj.Style.Height = imgObj.Style.Height + ‘px'; 　　
+6. FireFox无法解析简写的padding属性设置，如padding 5px 4px 3px 1px；必须改为 padding-top:5px; padding-right:4px; padding-bottom:3px; padding-left:1px0； 　　
+7. 消除ul、ol等列表的缩进时，样式应写成:list-style:none;margin:0px;padding:0px;其中margin属性对IE有效，padding属性对FireFox有效 　　
+8. CSS控制透明：IE：filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=60); FireFox：opacity:0.6; 　　
+9. CSS控制圆角：IE：不支持圆角； FireFox: -moz-border-radius:4px;或 -moz-border-radius-topleft:4px; -moz-border-radius-topright:4px; -moz-border-radius-bottomleft:4px; -moz-border-radius- bottomright:4px; 　　
+10. CSS双线凹凸边框：IE：border:2px outset; FireFox： -moz-border-top-colors: #d4d0c8 white; -moz-border-left-colors: #d4d0c8 white; -moz-border-right-colors:#404040 #808080; -moz-border-bottom-colors:#404040 #808080; 　　
+11. IE支持CSS方法cursor:url()自定义光标样式文件和滚动条颜色风格；FireFox对以上两者均不支持 　　
+12. IE有Select控件永远处于最上层的bug,且所有CSS对Select控件都不起作用 　　
+13. IE支持Form中的Label标签，包括图片和文字内容；FireFox不支持包含图片的Label，点击图片不能让标记 label for 的Radio或CheckBox产生效果 　　
+14. FireFox中的TextArea不支持onScroll事件 　　
+15. FireFox不支持display的inline和block 　　
+16. FireFox对Div设置margin-left, margin-right为auto时已经居中, IE中不行 　　
+17. FireFox对Body设置text-align时, Div需要设置margin: auto(主要是margin-left margin-right) 方可居中 　　
+18. 对超链接的CSS样式设置最好遵从这样的顺序：L-V-H-A。即 <style type="text/css"> <!-- a:link {} a:visited {} a:hover {} a:active {} --> </style> 这样可以避免一些访问过后的超链接就不具备hover和active样式了 　　
+19. IE中设置长段落自动换行在CSS中设置word-wrap:break-word；FireFox中使用JS插入 的方法来实现，具体代码如下： <script type="text/javascript"> /* <![CDATA[ */ function toBreakWord(el, intLen){ var obj=document.getElementById(el); var strContent=obj.innerHTML; var strTemp=""; while(strContent.length>intLen){ strTemp+=strContent.substr(0,intLen)+" "; strContent=strContent.substr(intLen,strContent.length); } strTemp+=" "+strContent; obj.innerHTML=strTemp; } if(document.getElementById && !document.all) toBreakWord("div_id", 37); /* ]]> */ </script> 　　
+20. 在子容器加了浮动属性后,该容器将不能自动撑开 解决方法：在标签结束后下一个标签中加上一个清除浮动的CSS clear:both; 　　
+21. 浮动后IE6解释外边距为实际边距的双倍 解决办法：加上display:inline 　　
+22. IE6下图片下方会有空隙 解决办法：为img加上display:block或设置vertical-align 属性为vertical-align:top | bottom |middle |text-bottom 　　
+23. IE6下两个层中间有空隙 解决办法：设置右侧div也同样浮动float:left或者相对IE6定义 margin-right:-3px; 　　
+24. LI中内容超过长度后以省略号的显示方法 <style type="text/css"> <!-- li { width:200px; white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow: hidden; } --> </style> （只适用与IE） 　　
+25. 将元素的高度和行高设为相同值，即可垂直居中文本 <style type="text/css"> <!-- div { height:30px; line-height:30px; } --> </style> 　　
+26. 对齐文本与文本输入框，须在CSS中增加vertical-align:middle;属性设置 <style type="text/css"> <!-- … … vertical-align:middle; } --> </style> 　　
+27. 支持WEB标准的浏览器设置了固定高度值就不会像IE6那样被撑开，但是又想设置固定高度又想能够被撑开呢?解决办法是去掉height属性而设置min-height，为了兼容不支持min-height的IE6可以这样定义： { height:auto!important; height:200px; min-height:200px; } 　　
+28. web标准中IE无法设置滚动条颜色 解决办法：在CSS中对body的设置改为对html的 <style type="text/css"> <!-- html { scrollbar-face-color:#f6f6f6; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#eeeeee; scrollbar-3dlight-color:#eeeeee; scrollbar-arrow-color:#000; scrollbar-track-color:#fff; scrollbar-darkshadow-color:#fff; } --> </style> 　　
+29. IE6由于默认行高问题无法定义1px左右高度的容器， 解决办法：在CSS中对容器设置如：overflow:hidden | zoom:0.08 | line-height:1px 　　
+30. 给Flash设置透明属性可使层显示在Flash之上 <param name="wmode" value="transparent" /> <!-- 解决IE上的问题 //> <embed wmode="transparent" …… > <!-- 解决FireFox上的问题 //> 　31. FireFox设置Padding属性后会相应的增加Width和Height属性值，IE不会 解决办法：用!important方法多定义一套Height和Width 　　
+32. FireFox对div与div之间的空格是忽略的，但IE是处理的；因此尽量在两个相连的div之间不要有空格和回车，否则可能会造成不同浏览器之间格式不正确，比如著名的3px偏差；而且原因很难查明 33. 形如如下格式 <div id="parent"> <div id="content"> </div> </div> 当Content内容多时，即使parent设置了高度100%或auto,在不同浏览器下还是不能完好的自动伸展；解决办法在层的最下方产生一个高度为1的空格,代码如下 <div id="parent"> <div id="content"> </div> <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div> </div> 　　
+34. IE和FireFox对字体small的尺寸解释不同，FireFox为13px,IE中为16px 　　
+35. IE和FireFox对空格的尺寸解释不同，FireFox为4px,IE中为8px

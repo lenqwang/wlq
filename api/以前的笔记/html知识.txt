@@ -1,0 +1,142 @@
+//定义选项卡(下面是格式)
+	<div id="tabs">
+		<ul>
+			<li><a href="#01"><span>菜单一</span></a></li>
+			<li><a href="#02"><span>菜单二</span></a></li>
+			<li><a href="#03"><span>菜单三</span></a></li>
+		</ul>
+		<div id="01">
+			这是菜单一的内容
+		</div>
+		<div id="02">
+			这是菜单二的内容
+		</div>
+		<div id="03">
+			这是菜单三的内容
+		</div>
+	</div>	
+
+//图片底部多出4px的距离
+	解决方法:img{display : block;}
+	margin : 三个参数(5px 15px 10px)  分别代表上 ， 左右 ， 下
+	zoom有清楚浮动的功能，即zoom : 1;设置在外容器
+
+//IE下设置遮罩层大小
+	width : document.documentElement.offsetWidth - 4 + "px",
+	height : document.documentElement.offsetHeight - 4 + "px"
+
+
+//对于img一定要设成block
+
+
+//关于div内的文字水平垂直居中的问题，可以使用不设width，height，直接使用padding:20px,然后height:auto;
+
+//完美解决IE6不支持fixed
+
+	/* 除IE6浏览器的通用方法 */
+	.ie6fixedTL {
+		position: fixed;
+		left: 0;
+		top: 0
+	}
+
+	.ie6fixedBR {
+		position: fixed;
+		right: 0;
+		bottom: 0
+	}
+	/* IE6浏览器的特有方法 */
+	/* 修正IE6振动bug */
+	* html,* html body {
+		background-image: url(about:blank);
+		background-attachment: fixed;
+	}
+
+	* html .ie6fixedTL {
+		position: absolute;
+		left: expression(eval(document.documentElement.scrollLeft) );
+		top: expression(eval(document.documentElement.scrollTop) )
+	}
+
+	* html .ie6fixedBR {
+		position: absolute;
+		left: expression(eval(document.documentElement.scrollLeft +
+			document.documentElement.clientWidth-this.offsetWidth)-(parseInt(this.currentStyle.marginLeft, 10)||0
+			)-(parseInt(this.currentStyle.marginRight, 10)||0 ) );
+		top: expression(eval(document.documentElement.scrollTop +
+			document.documentElement.clientHeight-this.offsetHeight- ( parseInt(this.currentStyle.marginTop
+			, 10)||0 )-(parseInt(this.currentStyle.marginBottom, 10)||0 ) ) )
+	}
+	
+
+//关于在浏览器显示代码而不执行的标签<pre></pre>
+
+
+//关于div内的内容超出宽度自动换行
+	IE：word-wrap : break-word;
+	W3C: white-space : normal;
+
+//关于对象的实际大小
+	实际所占宽度 = width + padding*2 + border*2
+	实际所占高度 = height + padding*2 + border*2
+	
+		
+//如何点击文字和checkbox的时候都会触发checked
+	<label for="checkboxID">
+		<input type="checkbox" id="checkboxID" name="" />点击我会选中checkbox
+	</label>
+	
+
+//一个网页引入的css文件，必须重置一些css样式，例如：
+	body{
+		line-height:1.4;
+	}
+	body,input,textarea,select{
+		font-size:12px;
+		font-size:100%;
+		color:#333;
+		font-family:arial;
+	}
+	body,h1,h2,h3,h4,p,ul,ol{
+		margin:0;
+	}
+	ul,ol{
+		padding-left:0; 
+		list-style-type:none;
+	}
+	/*image with no-border*/
+	img{border:0;}
+	
+//关于css的text-transform
+	它有三个重要的值: 1、uppercase(将文字转换成大写) , 2、lowercase(将文字转换成小写) , 3、capitalize(将文字的首字母转换大写)
+	
+//关于css的clip图片裁剪
+	clip: rect(top , right , bottom , left);
+	position: absolute;
+	
+//关于清楚浮动的三种方法
+	1、在浮动元素后添加一个空元素，使用clear: both; 
+	2、在浮动元素的父级元素增加一个overflow: auto; 使用zoom: 1来兼容IE6	, 推荐!!!
+	3、在浮动元素的父级元素增加一个伪类parent:after{height: 0 ; clear: both; content: ""}这个三个一定要加上,不支持IE
+	
+//关于IE9+,高级浏览器下透明度的取代
+	background: rgba(0,0,0,0.6); 最后一个0.6代表透明度，即取代了opacity;
+	
+	
+//仿xp系统下工具栏的分栏
+	html结构: 
+		<div>
+			<ul>
+				<li>首页<span class="line"></span></li>
+				<li>导航一<span class="line"></span></li>
+				<li>导航二<span class="line"></span></li>
+			</ul>
+		</div>
+		
+	css: div{background: #E0E0D7;}
+		.line {
+			border-left: 1px solid #bfbfbf;
+			border-right: 1px solid #fff;
+			height: 30px;
+			color: #ccc;
+		}

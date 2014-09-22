@@ -1,0 +1,89 @@
+css3系统学习:
+
+.border-radius: 圆角;	左上 右上 右下 左下	5px 
+.box-shadow: 阴影;	x轴偏移 y轴偏移 阴影值 放大值 阴影颜色 内部阴影	1px 1px 8px 2px #ccc inset
+
+.background-size: 背景图片尺寸;	(100px 100px , 100px auto, 50%, cover(扩展足够大，可能无法显示整个图片),contain(完全适应内容区域))
+.background-origin:	定位背景图片;	(border-box(以边框定位) , padding-box(以内边距定位) , content-box(以内容定位))
+.background-clip: 规定背景的绘制区域;	(border-box(绘制边框以内的背景) , padding-box(绘制内边距以内的背景) , content-box(绘制内容以内的背景))
+
+.text-shadow: 文本阴影;	水平阴影位置 垂直阴影位置 模糊距离 阴影颜色		5px 5px 5px #ccc
+.word-break: 文本自动换行; (normal(默认) , break-all(单词内换行) , keep-all(半角或连字符) , hyphenate(恰当的断字点))
+.word-wrap: 允许长单词换行; (normal , break-word)
+.text-overflow: 文本溢出处理;	(clip(修剪文本) , elipsis(省略号替代溢出文本) , string(使用字符串替代溢出文本))
+.@font-face: 规定一个字体;
+	@font-face {
+		font-family: 字体名;
+		src : url('字体路径');
+	}
+	div {font-family: 字体名;}
+	
+.animation: 动画;	-前缀-animation: 动画名(@keyframes) 一周期所需时间(0) 运动曲线(ease)	延迟时间(0) 动画播放次数(1) 下一周期是否逆向播放(normal) 是否正在运行(running)
+@-前缀-keyframes changebg
+{
+	from {background: red;}
+	top {background: pink;}
+	/*
+		0% {background: red;}
+		50% {background: pink;}
+	*/
+}
+
+div {
+	-前缀-animation: changebg 5s linear 0s infinite(无限) alternate(逆向) running|paused
+}
+
+.column-count: 创建多列; (3|number)
+.column-gap: 规定列之间的间隙; (30px|px)
+.column-rule: 宽度 样式 颜色; (3px outset #ccc)
+
+.resize: 规定是否可由用户调整元素尺寸; (both)
+.box-sizing: 允许您以确切的方式定义适应某个区域的具体内容; (border-box)
+.outline-offset: 调整outline和border直接的大小; (15px|px)
+
+//利用css3做出三角形
+	上三角:△
+	div{
+		width:0;
+		height:0;
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-bottom: 8px solid #000;
+		transition: all .3s ease-in-out;
+	}
+	div:hover {
+		transform: rotate(180deg);
+	}
+	左上三角:
+	div{
+		width: 0;
+		height: 0;
+		border-top: 8px solid #000;
+		border-right: 8px solid transparent;
+	}
+	平行四边形:
+	div{
+		width: 150px;
+		height: 100px;
+		margin-left: 20px;
+		-webkit-transform: skew(20deg);	
+		background: #000;
+	}
+	
+//利用css3做出苹果手机系统里面的按钮
+	.btn_apple {
+		width: 150px;
+		height: 30px;
+		line-height: 30px;
+		background: -moz-linear-gradient(top , #AEB3C3 0% , #6A7390 49% , #5B6685 50% , #505D7D 51% ,  #4F5D7D 51% , #69728E 100%);
+		border-radius: 5px;
+		border: 1px solid #363D58;
+		box-shadow: 0 0 1px #C0C5D2 inset;
+		position:absolute;
+		top: 300px;
+		left: 50px;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		font-family:微软雅黑;
+	}

@@ -1,0 +1,24 @@
+限定一段文字的长度并在其后面加三个点：
+
+text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+
+关于list-style:
+
+disc: 表示圆点
+inside: 表示圆点显示在ul文本内
+outside: 和inside相反
+
+list-style: decimal inside;
+效果：
+1. 飞机飞看风景
+2. 分无法范文芳
+
+IE6下对png的终极解决方案
+#pics
+{
+       background:url(../images/W3CfunsLogo.png) no-repeat;
+
+      /*以下为IE6设置PNG透明代码*/
+      _background:none;
+       _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="images/W3CfunsLogo.png");
+}

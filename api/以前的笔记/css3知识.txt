@@ -1,0 +1,329 @@
+﻿//css3的知识
+	//border-radius : 表示圆角的意思
+	通用 : border-radius:半径大小(5px); 一般画圆都是长宽一样长度,半径就为长或宽的一半即可成圆
+	Chrome : -webkit-border-radius : 5px;
+	FF : -moz-border-radius : 5px;
+	它的顺序是按照:左上角 ， 右上角 ， 右下角 ， 左下角,也即：border-radius : 5px 5px 0 0;
+	也可以：border-top/bottom-left/right-radius:
+	
+	//box-shadow : 表示阴影(默认外部阴影) 
+	通用 : box-shadow:(x-offset , y-offset , blur , color of shadow),分别表示: x轴偏移量,y轴偏移量，模糊值,阴影颜色
+	Chrome : -webkit-box-shadow : 1px 1px 3px #ccc;
+	FF : -moz-box-shadow : 1px 1px 3px #ccc;
+	.内阴影：box-shadow: 1px 1px 3px #ccc inset;
+	
+//关于css3的transform
+	.使用值rotate(变形的角度，单位是deg),例如:
+	IE : -ms-transform: rotate(45deg);  //顺时针旋转45度；
+	Firefox : -moz-transform: rotate(90deg); //顺时针旋转90度；
+	Chrome || Safari : -webkit-transform: rotate(45deg); //顺时针旋转45度；
+	Opera : -o-transform: rotate(45deg); //顺时针旋转45度；
+	使用transform-origin来修改旋转的基准点，水平方向有left , center , right; 垂直方向有top , center , bottom;例如：
+	IE : -ms-transform-origin: left bottom; //以左下角作为基准点旋转
+	
+	rotate3d(x , y , z , 角度) //3D旋转
+	
+	.使用值scale(缩放百分比),例如：IE: -ms-transform: scale(0.5); //即缩小一倍大小,也可放大1.5倍
+	.使用值skew(水平方向倾斜角度，垂直方向倾斜角度),例如：IE: -ms-transform: skew(30deg , 30deg); //在水平和垂直方向都倾斜30度，如果参数只写一个代表水平方向倾斜
+	.使用值translate(水平方向移动距离,垂直方向移动距离),例如：IE: -ms-transform: translate(50px , 50px); //在水平和垂直方向都移动50个像素
+	以上可以组合起来使用，例如：
+	IE : -ms-transform : translate(50px , 50px) rotate(45deg) scale(1.5);	//水平和垂直方向都移动50个像素，然后旋转45度，再放大1.5倍
+	
+//关于css3的Gradient渐变
+	Gradient分为linear-gradient(线性渐变)和radial-gradient(径向渐变)
+	用法: background: -moz-linear-gradient(渐变方向 , 开始颜色 ，结束颜色 )
+			Firefox	: -moz-linear-gradient(top , #f2f2f2 , #e1e1e1);
+		Chrome || Safari : -webkit-linear-gradient(top , #f2f2f2 , #e1e1e1);
+		Opera : -o-linear-gradient(top , #f2f2f2 , #e1e1e1 ); 
+	IE : 
+		filter : progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f2f2f2,endColorstr=#e1e1e1); //IE9
+		-ms-filter : "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f2f2f2,endColorstr=#e1e1e1)";//IE8
+		其中GradientType=0是默认值表示垂直渐变，1表示水平渐变
+	
+		-内核-linear-gradient(left, red, #f96, yellow, green, #ace)表示水平均匀渐变颜色分布
+
+//关于css3的text-shadow文字阴影
+	W3C: text-shadow: 2px 2px 3px #foo  //分别代表x轴偏移量，y轴偏移量，阴影值，阴影颜色
+	IE : filter: shadow(color=red,direction=145,strength=6); //分别代表阴影颜色值，偏移方向值，阴影值
+	---给文字设置透明，color: transparent;
+	---可以这样设置text-shadow:弄成3d效果:
+		{
+			font-size: 70px;
+			font-weight: blod;
+			color: #fff;
+			text-shadow: 1px 1px red,2px 2px red,3px 3px red,4px 4px red,5px 5px red;
+		}
+
+//关于css3的动画animation, 只有IE不支持
+	参数详解:
+		.animation-name(动画的名称)
+		.animation-duration(定义动画播放需要的时间。默认为0)
+		.animation-timing-function(定义动画播放的方式)
+		.animation-delay(定义动画开始的时间)
+		.animation-iteration-count(定义动画播放循环的次数,infinite为无限循环。默认为1)
+		.-webkit-animation-direction(动画播放的方向,1.normal(默认) 2.alternate(偶数向前播放，奇数反方向播放))
+	
+	实例:
+	{		
+		/* 确保我们是在一个 3-D 空间 */
+		-webkit-transform-style: preserve-3d;
+		/*动画属性定义*/
+		-webkit-animation-name: x-spin;		//让整个行使用x-轴旋转
+		-webkit-animation-duration: 7s;		//7秒中的动画
+		-webkit-animation-iteration-count: infinite;	//无限次播放
+		-webkit-animation-timing-function: linear; 		//线性
+	}
+	/* 定义要调用的动画 */
+	@-webkit-keyframes x-spin { 
+		0% { -webkit-transform: rotateX(0deg); } 
+		50% { -webkit-transform: rotateX(180deg); }
+		100% { -webkit-transform: rotateX(360deg); } 
+	}
+	
+	例如：
+		.objs{
+			color : #000;
+			animation : moveFromBottom 500ms ease;
+		}
+		@keyframes moveFromBottom {
+			from {
+				transform : translateY(-100%);
+			}
+			to {
+				transform : translateY(0%);
+			}
+		}
+	让一颗心不停放大与缩小：(alternate:交替的运行)
+		.ca-menu li:hover .ca-icon#heart{
+			animation: smallToBig 900ms alternate infinite ease;
+		}
+	
+//关于css3的transition动画属性(过渡属性)	,去掉chrome自带的输入focus时边框颜色,outline: none;
+
+	参数详解： transition-property (执行变换的属性)		值: none(没有属性值)||all(所有属性值,默认)
+			   transition-duration	(变换延续的时间)	值：单位s(秒),默认0		
+			   transition-timing-function (在延续时间段,变换的速率变化)		
+					值：ease(逐渐变慢,默认) || linear(匀速) || ease-in(加速) || ease-out(减速) 
+						|| ease-in-out(加速减速) || cubic-bezier(自定义时间曲线)
+						自定义时间曲线： (x1,y1,x2,y2)四个值
+			   transition-delay (变换延迟时间)	值： 单位s(秒),默认0
+	实例：
+		 a {
+			-moz-transition: background 0.5s ease-in,color 0.3s ease-out;
+			-webkit-transition: background 0.5s ease-in,color 0.3s ease-out;
+			-o-transition: background 0.5s ease-in,color 0.3s ease-out;
+			transition: background 0.5s ease-in,color 0.3s ease-out;
+		  }
+		  ,
+		  p {
+			  -webkit-transition: all .5s ease-in-out 1s;
+			  -o-transition: all .5s ease-in-out 1s;
+			  -moz-transition: all .5s ease-in-out 1s;
+			  transition: all .5s ease-in-out 1s;
+			}
+			
+//关于css3的box-sizing属性(对盒子模型的解析定义)
+	
+	它有两个值:
+		.content-box  -->设置这个值表示我们设置的宽和高不包括border,和padding,也即宽高的值不计入border和padding的值
+		.border-box	  -->设置这个值表示我们设置的宽和高包括border和padding值，在设置宽高的时候需要将这两个值考虑在内
+	兼容性:
+		FireFox: -moz-box-sizing
+		safari || chrome : -webkit-box-sizing
+		opera :  box-sizing
+		IE : -ms-box-sizing  //IE8+
+		
+//关于css的content属性，一般配合:before对象前面 和  :after对象后面 来使用
+	例如： .content:before{
+				content: attr(className);
+				//content: ""
+			}
+		
+//关于css3的选择器
+	
+	.属性选择器 [attr*=val]  //选择属性含有val的所有元素
+	.属性选择器 [attr^=val]	 //选择属性以val开头的所有元素
+	.属性选择器 [attr$=val]  //选择属性以val结尾的所有元素
+	.属性选择器 [attr=val]   //选择属性等于val的所有元素
+	
+	--结构性伪类选择器
+	
+	:root	//此选择器将绑定到页面的根元素中，所谓根元素，是指文档树中最顶层的元素，也就是<html>部分。
+	:not 	//如果想对某个结构元素使用样式，但是又想排除这个个元素下面的某个子元素，让它不使用此样式，可以使用它
+			//例如：#box *:not(h1){color:#900; font-weight:700;}
+	:empty	//当元素内容为空白的时候，使用其所定义的样式
+	:target	//使用其选择器来对页面中的target元素（该元素的ID被当作页面中的超链接）指定的样式，该样式只在用户点击了页面中的超链接，并且跳转到target元素后起作用
+	:first-child	//对象的第一个元素
+	:last-child		//对象的最后一个元素
+	:nth-child		//选择第几个元素，:nth-child(2)--选择第二个元素，:nth-child(4n+1)/*从第一行开始算起 每隔4个（包含第四个）使用次样式*/
+	:nth-last-child	//选择倒数第几个元素,倒数第二个元素，:nth-last-child(2)
+	:nth-of-type	//选择同类型的元素,用法: dt:nth-of-type(odd|even)
+	:nth-last-of-type //选择倒数第几个元素
+	:only-child		//选择只有一个孩子的所有元素
+	
+	注：nth-child和nth-last-child在计算子元素是奇数行还是偶数行的时候，是连通父级元素中的所有子元素一起计算的，
+		换句话说，dt:nth-child(odd)这句话的含义，并不是指“当前dl列表中的第奇数个dt子元素来计算”，
+		而是指“当前dl列表的第奇数个子元素如果是h2子元素，那么将选择它”，
+		
+	--状态伪类选择器
+	
+	:hover	//当鼠标悬停在所指定的元素上时所使用的样式；
+	:active	//当所指定的元素处于激活状态（鼠标在元素上按下还没有松开）时所使用的样式；
+	:focus	//当元素获得光标焦点时使用的样式，主要用在文本框输入文字时使用；
+	:enabled	//指定当前元素处于可用状态的样式；
+	:disabled	//指当前元素处于不可用状态的样式；
+	:ready-only	//指定当前元素处于只读状态的样式；
+	:ready-write	//指当前元素处于非只读状态的样式；可读可写
+	:default	//指定当前元素处于非选取状态的单选框或复选框的样式；
+	:checked	//指当前元素处于选取状态的单选框或复选框状态的样式；
+	:indeterminate	//指定当页面打开时，某组中的单选框或复选框元素还没有选取状态时的样式；
+	::selection	//指定元素处于选中状态时的样式,注意是两个:
+	~ 	//指定位于同一个元素之中的某个元素之后的所有其他兄弟元素所使用的样式		例如： div ~ span //表示div后的所有兄弟span元素,必须是同级别的
+	
+	
+//关于css3的content属性
+	
+	p:after || p:before{content: "前端开发" || content: none; || content: url(xx.gif); || content: attr(alt)}
+	
+	//实现计数器完成连续编号
+	ul li{
+		counter-increment: 定义计数器名
+	}
+	ul li:before{
+		color: red;
+		content: counter(引入计数器名)		//content: "第"counter(引入计数器名)"篇";
+	}										//定义成字母： content: counter(引入计数器名,upper||lower-alpha)"、"
+	
+	重置计数器：counter-reset: 要重置的计数器名;
+	
+	例如：
+		h4{
+    		counter-increment: big;
+    		counter-reset: sm;
+    	}
+    	h4:before{
+    		content: "第"counter(big)"篇、";
+    	}
+    	p{
+    		counter-increment: sm;
+    	}
+    	p:before{
+    		content: "第"counter(sm)"篇、";
+    	}
+		
+		<h4>标题1</h4>
+			<p>内容一</p>
+			<p>内容二</p>
+			<p>内容三</p>
+		<h4>标题2</h4>
+			<p>内容一</p>
+			<p>内容一</p>
+			<p>内容一</p>
+		<h4>标题3</h4>
+			<p>内容一</p>
+			<p>内容一</p>
+			<p>内容一</p>
+		<h4>标题4</h4>
+			<p>内容一</p>
+			<p>内容一</p>
+			<p>内容一</p>
+			
+	温馨提示：目前只有opera支持attr
+	
+	
+//给body加一个内部阴影
+	body:before{
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+		content: "";
+		height: 15px;
+		left: 0;
+		position: fixed;
+		top: -15px;
+		width: 100%;
+		z-index: 10;
+	}
+
+//css3 animation实例
+	
+	/*火箭升空*/
+	<div class="ani_plane"></div>
+
+			  .ani_plane {
+				    animation-delay: 2s;
+				    animation-duration: 12s;
+				    animation-fill-mode: both;
+				    animation-iteration-count: infinite;
+				    animation-name: fly;
+				    animation-timing-function: linear;
+				    background-image: url("http://imgcache.qq.com/qqshow/live/v4/130911_midautumn/images/plane.png");
+				    height: 60px;
+				    left: -141px;
+				    opacity: 0;
+				    position: absolute;
+				    top: 327px;
+				    transform: scale(0.5) rotate(-45deg);
+				    width: 120px;
+				}
+				@-moz-keyframes fly {
+					10% {
+					    left: -115px;
+					    opacity: 0.2;
+					    top: 270px;
+					    transform: scale(0.6) rotate(-41deg);
+					}
+					20% {
+					    left: -71px;
+					    opacity: 0.4;
+					    top: 200px;
+					    transform: scale(0.7) rotate(-35deg);
+					}
+					30% {
+					    left: -10px;
+					    opacity: 0.6;
+					    top: 127px;
+					    transform: scale(0.8) rotate(-22deg);
+					}
+					40% {
+					    left: 80px;
+					    opacity: 0.8;
+					    top: 59px;
+					    transform: scale(0.9) rotate(-12deg);
+					}
+					50% {
+					    left: 190px;
+					    opacity: 1;
+					    top: 7px;
+					    transform: scale(1) rotate(1deg);
+					}
+					60% {
+					    left: 309px;
+					    opacity: 0.8;
+					    top: -15px;
+					    transform: scale(0.9) rotate(22deg);
+					}
+					70% {
+					    left: 419px;
+					    opacity: 0.6;
+					    top: 0;
+					    transform: scale(0.8) rotate(36deg);
+					}
+					80% {
+					    left: 510px;
+					    opacity: 0;
+					    top: 37px;
+					    transform: scale(0.7) rotate(50deg);
+					}
+					90% {
+					    left: 579px;
+					    opacity: 0;
+					    top: 87px;
+					    transform: scale(0.6) rotate(65deg);
+					}
+					100% {
+					    left: 633px;
+					    opacity: 0;
+					    top: 141px;
+					    transform: scale(0.5) rotate(71deg);
+					}
+				}
+	

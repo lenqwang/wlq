@@ -1,0 +1,210 @@
+//将jquery($)定义自己的名字
+	var wlq = $.noConflict(); //重新定义jquery
+	wlq(function(){
+	     wlq("#id").html("这是用我的名字来定义的jquery");
+	});
+//关于jquery的data
+	用来存储数据:$("elem").data("current" , {data1 : "data1" , data2 : "data2"} || "datas");
+	读取数据 : $("elem").data(current.data1 || current);
+
+//关于$.extend
+	定义一个jquery实例拓展方法 : $.fn["methodName"] = function(){};
+	$.extend({},1,2,3);返回一个空对象
+	$.extend({},{name:"a",age:12,sex:"male"},{name:"b",blood:"O",married:"no"});得到一个合并之后的对象name:b,会保留原对象
+	== {name : "b" , age : 12 , sex : "male" , blood : "O" , married : "no"}
+	//$.extend(boolean , {} , {name : "a" , age : 12 , sex : { male : "i am male" , female : "i am female"}},{name : "b" , blood : "O" , sex : { male : "i am not female" , female : "i am not male"});
+	//第一个参数如果是true则代表是深度拷贝,即 : {name : "b" , age : 12 , sex : { male : "i am not female" , female : "i am not male"} , blood : "O" }
+	
+//关于$.each
+	$(elem).each(function(i,elem_obj){遍历elem/elem_obj这个对象,i为索引});	//elem == elem_obj
+	$.each([arr],function(i,name){遍历arr,name指代arr[i]});
+
+//关于outerWidth(),outerHeight(),innerWidth(),innerHeight()	(只读不可写,IE使用这两个方法行不通，FF正常使用)
+	//outerWidth(),outerHeight()
+	这两个方法获取包括padding,border的长度，返回一个数值,参数为boolean，默认是false,如果是true则也包括margin的长度
+	//innerWidth(),innerHeight()
+	这个两个方法获取只包括padding的长度,不包括border,没有参数
+	
+//如何将jquery对象转换成js对象
+	elem = jquery对象
+	elem.jquery ? elem[0] : elem;
+	
+//关于jQuery的方法get()
+	$("#elem").click(function(){
+		alert($(this).get(0));	//其中$(this).get(0)就转换成了js对象不再是jquery对象了
+		alert(this);		//此时的this就是值当前的js对象不再是jquery对象了
+	});
+
+//关于jquery的方法remove()
+	$(elem).remove();	//移除这个元素以及子元素
+	
+//关于jquery的全新选择器sizzle
+	查看jquery的源代码: (3679行--5523行)
+		jQuery.find = Sizzle;
+		jQuery.expr = Sizzle.selectors;
+		jQuery.expr[":"] = jQuery.expr.pseudos;
+		
+		function setFilters() {}
+		Expr.filters = setFilters.prototype = Expr.pseudos;
+		Expr.setFilters = new setFilters();
+		
+	可以知道$.expr[":"] = {		//可以这样使用 $("span:span")得到一个jquery对象,表示一个伪类的拓展
+		span : function(el){	//el表示一个js对象
+			return el;
+		}
+	};
+	or
+		$.extend($.expr[":"],{
+			span : function(el){
+				return el;
+			}
+		});
+
+//关于jquery的closest(),parent(),parents();
+	closest()就是包括自身往上面找匹配的元素
+	parent()就是找对象的直接父亲，不包括自身的匹配元素
+	parents()就是找对象的所有父亲匹配的元素
+	
+//关于jquery的绑定事件bind,live,delegate这三个事件绑定的区别
+	bind是在当前的文档中绑定特定的对象，对未来的对象没有这个功能
+		$("a").bind("click" , function(){});
+		bind("事件名.自定义名称" , function(){}); 解绑unbind(".自定义名称")或者unbind("事件名")或者unbind("事件名.自定义名称")
+	live是在文档的节点上进行判断并已经绑定了事件处理函数，判断传来的事件名称和dom元素对象，然后给对象进行事件处理
+		$("a").live("click" , function(){});
+	delegate是在某个元素下查下符合的对象进行事件绑定，并且对未来的对象也是有用的
+		$("#elem").delegate("a" , "click" , function(){});
+	
+	这三个事件绑定函数的执行效率:delegate > live > bind;
+	
+//关于jquery的filter，筛选符合条件的元素并返回,   jquery 1.9已经撤掉了$.browser取而代之的是$.support
+
+//关于jquery的end() , 终止在当前链的最新过滤操作，并返回匹配的元素集合为它以前的状态
+	也就是说在使用end之后，当前的对象就是过滤之后的最新对象
+
+//关于jquery的scrollTop的BUG问题
+	Firefox和IE的标准模式下，只有设置 html 的 scrollTop 是有效的，对 body 的设置会被忽略。
+	Firefox和IE的怪异模式、以及Safari和Chrome(任意模式)，只有设置 body 的 scrollTop 是有效的，对 html 的设置会被忽略。
+	
+//关于jquery的新生事件on,废弃了之前的bind,live,delegate,统一使用on函数
+	$(elem).on("事件名称 || 或者命名空间 || 自定义事件名" , 选择器 , [数据] || {名值对数据} , function(){} );
+	$(elem).on(
+		"click" || click.href || search , 	//事件名称 || 或者命名空间 || 自定义事件名
+		"#elem" , 	//选择器
+		[data1 , data2] || {name1 : data1 , name2 : data2} 	//[数据] || {名值对数据}
+		function(){} 	//处理函数
+	)
+	//强调自定义事件名用trigger("自定义事件名" , function(){}),传来的数据如果是名值对,event.data.名称
+	$(elem).on({
+		click : function(){},
+		mouseenter : function(){},
+		mouseleave : function(){}
+	})
+	//event.stopPropagation()阻止冒泡，event.preventDefault()阻止默认行为
+	//删除事件使用off("事件名称 || 或者命名空间 || 自定义事件名" , 选择器 , function(){} )
+	//执行一次事件后删除这个事件使用one()和on函数一样使用
+	
+//关于jquery的contents()方法
+	此方法不接受任何参数，返回object，功能是获取对象的内容，如果是iframe则是获取src里面的文件内容
+	用法: $(elem).contents();  获取iframe的src里面的内容:$("iframe").contents().find(elem);
+	
+//关于jquery的动画animate()
+	$(elem).animate({
+			width : "-=50px"
+		} , //要改变的属性值
+		3000 , //运动时长 
+		easying , //动画名称 
+		function(){} //完成动画之后的函数
+	)
+	或者  
+	$(elem).animate({
+		width : "+=50px"	//要改变的属性值,如果是要改变颜色类的话用jquery.color.js
+	},{
+		duration : 3000 , //运动时长
+		specialEasing : {	//针对性的改变指定属性
+			width : "linear" ,	//easing的动画名称
+			height : "easeOutBounce" //easing的动画名称
+		}，
+		complete : function(){
+			//动画完成后的处理函数(回调函数)
+		}
+	});
+元素节点的操作:	
+
+//关于jquery的节点插入,增加节点篇
+	元素内前插入(prepend,prependTo)
+	元素内后插入(append,appendTo)
+	元素外前插入(before,insertBefore)
+	元素外后插入(after,insertAfter)
+	
+//关于jquery的节点删除,删除节点篇
+	将目标元素移除(remove)
+	将目标元素内的东西清空(empty)
+	
+//关于jquery的节点复制，复制节点篇
+	将目标元素进行克隆(clone)
+	如果它的参数是true则将它身上绑定的事件也克隆过来
+	
+//关于jquery的节点替换,替换节点篇
+	将目标元素进行替换  $(target).replaceWidth(content)
+						$(content).replaceAll(target)
+	
+//关于jquery的节点包裹，包裹节点篇
+	在目标元素外层包裹一层父元素(wrap)
+	去除目标元素的父元素,保留兄弟和本身元素(unwrap)此方法不接受参数
+	在所有目标元素的外层包裹一个父元素(wrapAll)
+	在目标元素的内层包裹一个元素(wrapInner)
+	
+//关于jquery 1.9新增功能
+	$(elem).css(["width" , "height" , "background-color"]);	//获取一组对象width:100px , height:28px , background-color:orange
+
+//关于jquery如何操作iframe的问题
+	在浏览器兼容问题下FF疑似跨域操作，获取不到iframe内的dom节点，在获取到iframe的document的时候值却为空
+	IE下可以正常获取到，方法是: $(ele).contents().find(tagName);可以正常获取dom节点,前提必须是iframe的src路径一定要是在同级目录下
+	
+//关于jquery获取select选中的值
+	$("select option:selected").text();  或者   $(select).children("option:selected").text();
+	
+//关于对象或数组转换成字符串
+	var objs = {name : "wlq"} , var arr = ["name" , "age"];
+	jQuery.param(objs || arr.split("&"));
+	.字符串转换成对象
+	var str = '{"name" : "wlq"}'; var objs = jQuery.parseJSON(str); objs.name = wlq;   //注意一定要是外面先单引号，里面双引号，否则不能通过
+	.字符串转换成数组
+	使用jQuery.makeArray(lis);通过使用makeArray使得让li的节点集合转换成数组
+	var str = "abcdefg"; Array.prototype.slice.call(str); 通过使用$.isArray(str); //true得到是一个数组
+	或者
+	var str = "abdaffwead".replace(/(.)(?=[^$])/g, "$1,").split(",");
+	
+//关于jquery的serialize、serializeArray方法,不需要任何参数
+	jQuery.serialize()是取得表单里所有name=value形式的字符串组合，中间用&符合连接,例如：name=wlq&age=23
+	jQuery.serializeArray()是取得表单里所有{name:'name',value:"wlq"}集合组成的数组里面是很多这样对象的集合
+	
+//关于jquery ajax的跨域
+	1、使用$.getJSON("http://www.webfishes.com/common/test.php?callback=?" , function( data ){
+		console.info(data.xx); //data就是服务器端返回来的json数据
+	});
+	2、使用$.ajax({
+		url : "http://www.webfishes.com/common/test.php",
+		type : "get",
+		dataType : "jsonp",	//使用这个数据类型，jquery自动在url地址的末尾加上了一个callback=?
+		async : "true", //默认为异步，false为同步
+		success : function( data ){
+			console.info( data.name ); // data就是从服务器端返回来的json数据
+		}
+	});
+	
+	php代码： 
+		<?php 
+			header('Content-Type:text/javascript; charset=utf-8'); 
+			class User{ 
+				public $id; 
+				public $name; 
+				public function __construct($id, $name){ 
+					$this->id = $id; 
+					$this->name = $name; 
+				} 
+			} 
+			$users = array(new User(1, 'admin'), new User(2, 'root')); 
+
+			echo $_REQUEST['callback'].'('.json_encode($users).')';	//最关键的一步,
+		?>

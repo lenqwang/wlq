@@ -1,0 +1,390 @@
+//关于html5必须知道的15项新增特性
+	.文档类型申明<!doctype html>
+	.去掉了<link>标签里面的属性type <link style="stylesheet" href="..css" />
+	 去掉了<script>标签里面的属性type	<script scr="..js"></script>
+	.标签更加语义化<header> 、<footer> 、<hgroup>(h1,h2等标题类的父类) 、 <mark>(高亮显示)、
+	 <figure>	<!--用于将图片和文字注释集一体-->
+	 	<img src="..jpg" />
+	 	<figcaption>
+	 		<p>注释图片用的</p>
+	 	</figcaption>
+	 </figure>
+	.定义小字用于显示那些底部的版权和地址信息	<small>新的地址信息</small>
+	.占位符placeholder	<input type="text" placeholder="输入姓名" />	 在输入框内提前预置文字，输入文字时自动消失
+	.必填项required	<input type="text" placeholder="输入用户名" required || required="required" />出错时高亮显示
+	.自动聚焦autofocus,文档加载时会自动聚焦 <input type="text" placeholder="会自动聚焦在这" autofocus />
+	.音频<audio autoplay="autoplay" src="<FF .ogg || Wibkit .mp3>" controls>
+	.视频<video src=".ogg || .mp4" controls preload="preload">实现预加载
+	.正则表达式pattern <input type="text" placeholder="输入用户名" pattern="/\w{3,10}/g" required />
+	
+html5的几大新增特性:
+	Canvas
+	WebGL
+	SVG
+	Video
+	Form
+	选择器
+	本地存储
+	本地数据库
+	离线应用
+	WebWorker
+	WebSocket
+	桌面提醒
+	拖拽
+	地理位置定位
+
+
+
+//关于html5的标签<form>
+
+	例如： <form id="form1" action="xx.php">
+				<input type="submit" value="提交" />
+			</form>
+			
+			<input type="text" name="username" for="form1" />
+			<input type="text" name="userpsw" for="form1" />
+			<input type="text" name="userage" for="form1" />
+			
+	温馨提示：这里的for = 表单的ID
+	
+//关于html5新增input属性值url,email
+	
+	例如：<form action="#">
+			<input type="url" value="http://www.webfishes.com"  />
+			<input type="email" value="793244657@qq.com" />
+			<input type="submit" value="提交" />
+		</form>
+		
+	温馨提示：对应输入框内为空的处理还没有一个提示信息，可以自己做一个验证空的函数
+	
+//关于html5的日期类型
+
+	例如：
+	<form action="xx.php">
+    	<input type="date" /> 	<!-- 日期类型 -->
+    	<input type="time" />	<!-- 时间类型 -->
+    	<input type="datetime" />	<!-- 日期时间类型 -->
+    	<input type="datetime-local" />		<!-- 本地日期时间类型 -->
+    	<input type="month" />		<!-- 月类型 -->
+    	<input type="week" />		<!-- 周类型 -->
+    	<input type="submit" value="提交" />		
+    </form>
+	
+	温馨提示：在火狐浏览器无效，webkit内核支持，opera支持最佳
+	
+//关于html5的特殊的input值
+	
+	例如：
+		<form action="xx.php">
+			<input type="number"  min="0" max="6" step="2" value="2" />  <!-- 此值具有四个属性, min最小，max最大，step步长，value默认值 -->
+			<input type="range"  value="10" />	<!-- 范围拉动条,同样具有四个属性 -->
+			<input type="search"  />	<!-- 搜索框和输入框样式差不多 -->
+			<input type="tel" />	<!-- 没有强制的验证规则，需要自己定义 -->
+			<input type="color" />	<!-- 颜色拾取器 -->
+			<output type="output">30</output>	<!-- output标签，目前浏览器支持还不是很理想,必须放在form表单内，和for相关，用于输出range的值 -->
+			<input type="submit" value="提交" />		
+		</form>
+	温馨提示，output是标签，其他是input属性值，现在浏览器支持很不理想，暂用
+	
+//关于html5的一些属性值
+	
+	例如：
+	<form action="xx.php">
+    	<input type="text" required />	<!-- 必填项,为空提示错误 -->
+    	<input type="text" required pattern="\d{3}" />	<!-- 使用pattern属性放入正则验证此输入内容 -->
+    	<input type="number" min="3" max="10" />	<!-- 使用min和max限制输入的最大最小值,min和max是日期和数字类型的专有属性 -->
+    	<input type="number" step="10" min="0" max="100" value="0" /> <!-- 步长为10 -->
+    	
+    	<input type="submit" value="提交" />
+    </form>
+	
+	温馨提示：这些和正则表达式配合使用可以起到验证表单的效果
+	
+//关于html5的音频标签
+
+	<!-- audio包括一些属性
+  		src: 音频的地址
+  		controls: 向用户显示控件，比如播放按钮。
+  		loop: 每当音频结束时重新开始播放。
+  		preload: 音频在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性。
+  		autoplay: 则音频在就绪后马上播放。
+  	 -->
+    <audio src="http://zhangmenshiting2.baidu.com/data2/music/5814678/5814678.mp3?xcode=0f479d949c4372d1165aae570e00d8bd&mid=0.76911343441060" controls="controls" autoplay="true">
+    		您的浏览器不支持 audio 标签。
+    </audio> 
+	
+//关于html5的视频标签
+
+	<!-- video包括一些属性
+  		src: 要播放的视频的 URL，路径可为网络路径或相对路径。
+  		controls：向用户显示控件，比如播放按钮。
+  		loop：每当视频结束时重新开始播放。
+  		preload：视频在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性。
+  		autoplay：则视频在就绪后马上播放。
+  		width：则视频的宽度。
+  		height：则视频的高度。
+  	 -->
+    <video width="600" height="400" controls="controls" autoplay="true">
+        <source src="http://ie.sogou.com/lab/inc/BigBuckBunny.mp4" type="video/mp4"/>
+        <source src="http://ie.sogou.com/lab/inc/BigBuckBunny.ogv" type="video/ogg"/>
+ 	</video> 
+	
+//关于html5的标签ol
+	主要新增了两个属性值,<ol start="50",reversed><li></li>...</ol> 表示编号从50开始，reversed目前浏览器还不支持
+
+//关于html5的datalist标签，和百度输入下拉框的效果一样,简称自动补全
+	例如：
+	<input list="w3cfuns-search" />	<!-- datalist必须和input配合使用，input的属性list和datalist的id要一致 -->
+	 <datalist id="w3cfuns-search">
+		 <option value="W3Cfuns">
+		 <option value="W3C标准">
+		 <option value="W3C规则">
+		 <option value="W3C验证">
+		 <option value="前端开发">
+		 <option value="前端开发网">
+		 <option value="2天驾驭DIV+CSS">
+		 <option value="W3CSchool">
+	 </datalist>
+	 
+//关于html5的多文件上传,只需在标签内加入multiple属性即可
+	<input type="file" multiple />
+	
+//关于html5的新标签figure
+
+	figure元素是一种元素的组合，可带有标题（可选）。
+	figure标签用来表示网页上一块独立的内容，将其从网页上移除后不会对网页上的其他内容产生影响。
+	figure所表示的内容可以是图片、统计图或代码示例。
+	figure用友一个子标签——figcaption标签。
+ 
+注意：一个figure元素内最多只允许放置一个figcaption元素，其他元素可无限放置。
+
+//关于html5的新标签details,目前只有chrome支持该标签,简称展开伸缩标签
+
+	例如：
+		<details open>	//默认是关闭的，open属性是加载的时候就是打开的状态
+			<summary>我要查看详细的东西</summary>
+			<p>这是一条神奇的天路耶</p>
+		</details>
+		
+//关于html5的新标签mark,用于需要突出或高亮显示的内容
+	使用方法： <mark>关键词</mark>普通文字
+	
+//关于html5新增标签progress，进度条标签
+	属性： value:表示当前进度，max：表示总进度。注：value和max属性的值必须大于0，value的值小于或等于max属性的值。
+ 例如：
+	<p>完成百分比：<progress max="100" value="30"></progress></p>
+	
+//关于html5的新标签meter,用于显示进度条，功能和progress差不多
+	属性：
+		value：在元素中表现出来的实际数量值。该属性缺省值为0，可以给该属性指定浮点数小数值。
+		min：指定规定范围时允许使用的最小值，该属性缺省值为0，设置最小值时，值不可小雨0。
+		max：指定规定范围时允许使用的最大值，如果设定该属性值小于min属性的值，那么浏览器会把min设置为最大值。max属性缺省值为1。
+		low：规定范围的下限值，等于这个值会出现黄色，必须小于或等于high属性的值。同样的，如果low属性值小于min属性值，那么浏览器把min属性的值视为low属性的值。
+		high：规定范围的上限值，等于这个值会出现红色，如果该属性值小于low属性值，那么把low属性值视为high属性值，同样的，如果该属性值大于max属性值，那么把max属性值视为high属性的值。
+		optimum：设置最佳值，等于这个值就会出现绿色，属性值必须在min属性值与max属性值之间，可以大于high属性值。
+	例如；
+		<meter id="W3Cfuns_meter" min="0" max="1000" value="50" low="800" high="900" optimum="100">aaaaaaaaaaa</meter>
+		
+//关于html5新增的js选择器
+	
+	1、document.querySelector("selector");			document.querySelector(".content ul li");//获取第一个li元素
+	根据CSS选择器返回第一个匹配到的元素，如果没有匹配到，则返回null;
+	
+	2、document.querySelectorAll("selector");		document.querySelectorAll(".content ul li");//获取所有的li元素
+	根据CSS选择器返回所有匹配到的元素数组，如果没有匹配到，则返回空数组;
+	
+	3、document.getElementsByClassName("selector");			document.getElementsByClassName("w3c");	//获取class为w3c的所有元素
+	根据类选择器返回所有匹配到的元素数组，如果没有匹配到，则返回空数组;
+	
+//关于html5更新的本地存储 Web Storage
+	分为两种，一种是sessionStorage(临时存储，浏览器关闭就消失),另一种是localStorage(本地存储,存储在本地)
+
+	1、sessionStorage
+		使用方法：
+			存储数据: sessionStorage.setItem(key , value);
+			读取数据：sessionStorage.getItem(key);
+	2、同sessionStorage方法使用一样
+
+//关于html5的创建数据库	//技术名称，SQLLite
+	var db = openDatabase("数据库名称","版本号","数据库描述","数据库大小");	
+	//该方法返回创建后的数据库对象，如果数据库不存在，则创建该数据库。
+	//事务处理
+	db.transaction();
+	//执行executeSql方法
+	db.transaction(
+		function(tx){
+			tx.executeSql(sqlQuery , Array , dataHandler , errorHandler);
+		}
+	);
+	注:  sqlQuery：表示要执行的SQL语句
+		 Array：表示SQL语句中所使用到的参数数组
+		 dataHandler： 表示SQL执行成功后的回调函数
+		 errorHandler：表示SQL错误时所执行的回调函数
+ 
+ //关于html5标签
+ 
+	<header> : 定义网页头部容器
+	<hgroup> : 嵌套在<header>里面的小容器
+	<article> : 用于显示大块文章内容的容器
+	<address> : 用于显示地址信息的标签
+	<time> : 用于显示时间信息 , <time datetime="2013-05-19 00:06">today now</time>
+	<section> : 通常用在一个区域,和<aside>配合使用
+	<aside> : 用于显示在网页的一边<aside><section></section></aside>
+	<footer> : 用于显示在网页底部信息的表签
+	<ruby> : 用于显示汉字元素信息, <ruby>汉字 <rt>日文</rt> </ruby>
+	
+	
+	
+	
+//关于拖放属性
+	拖放属性: draggable = "true" 即可激活拖放。
+	例如：
+		<div id="mydiv" ondrop="drop(event)" ondragover="allowDrap(event)"></div>
+		<img src=".." alt="" id="myimg" draggable="true" ondragstart="drag(event)" />
+		<script>
+			//放置位置
+			function drop(event){
+				event.preventDefault();
+				var data = event.dataTransfer.getData("Text");
+				event.target.appendChild(document.getElementById(data));
+			}
+			//放哪里
+			function allowDrap(event){	//允许放置，需要阻止它默认的处理方式
+				event.preventDefault();
+			}
+			//拖什么
+			function drag(event){	//开始拖动,dataTransfer.setData("数据类型" , 值);
+				event.dataTransfer.setData("Text" , event.target.id);
+			}
+		</script>
+	
+	
+//关于canvas和SVG的区别
+	Canvas:
+
+		依赖分辨率
+		不支持事件处理器
+		弱的文本渲染能力
+		能够以 .png 或 .jpg 格式保存结果图像
+		最适合图像密集型的游戏，其中的许多对象会被频繁重绘
+
+	SVG:
+
+		不依赖分辨率
+		支持事件处理器
+		最适合带有大型渲染区域的应用程序（比如谷歌地图）
+		复杂度高会减慢渲染速度（任何过度使用 DOM 的应用都不快）
+		不适合游戏应用
+
+	
+//关于地理定位
+	//判断浏览器是否支持地理定位
+	function getLocation(){
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(showPosition|success , showErrors|error , |options );
+			//GPS功能,跟踪定位
+			var cur = navigator.geoloaction.watchPosition(showPosition|success , showErrors|error , |options);
+			clearWatch(cur);
+		}
+		else{
+			alert("您的浏览器不支持这个功能");
+		}
+	}
+	
+	//获取位置信息
+	function showPosition(pos){
+		pos .coords.latitude		-->	十进制数的纬度
+			.coords.longitude		--> 十进制数的经度
+			.coords.accuracy		-->	位置精度
+			.coords.altitude		-->	海拔，海平面以上以米计
+			.coords.altitudeAccuracy	-->	位置的海拔精度
+			.coords.heading			-->	 方向，从正北开始以度计
+			.coords.speed			-->	速度，以米/每秒计
+			.timestamp				--	响应的日期/时间
+	}
+	//错误处理
+	function showErrors(error){
+		switch(error.code){
+			case error.PERMISSION_DENIED:	//用户不允许地理定位
+			case error.POSITION_UNAVAILABLE:	//无法获取当前位置
+			case error.TIMEOUT:				//操作超时
+			case error.UNKNOWN_ERROR:		//未知错误
+		}
+	}
+	
+//关于Web存储
+	.localStorage	--本地存储(没有时间限制的数据存储)
+	.sessionStorage  --session存储(针对一个 session 的数据存储)
+	用法: localStorage.name = value;
+		  sessionStorage.name = value;
+		  
+		  
+//关于应用程序缓存(Application Cache)
+	优点:	
+		
+		离线浏览 - 用户可在应用离线时使用它们
+		速度 - 已缓存资源加载得更快
+		减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。
+		
+	启用应用程序缓存：
+		<html manifest="文件名.appcache">
+		
+	Manifest文件:
+	/*	
+		CACHE MANIFEST - 在此标题下列出的文件将在首次下载后进行缓存
+		NETWORK - 在此标题下列出的文件需要与服务器的连接，且不会被缓存
+		FALLBACK - 在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）
+	*/
+	文件名.appcache:
+		CACHE MANIFEST			
+		# 2012-02-21 v1.0.0		//注释
+		/theme.css				//首次下载后进行缓存
+		/logo.gif				//首次下载后进行缓存
+		/main.js				//首次下载后进行缓存
+
+		NETWORK:
+		login.asp				//需要与服务器的连接，且不会被缓存(*代表所有文件都需要网络支持)
+
+		FALLBACK:
+		/html5/ /404.html		//与网络失去连接，用404页面替代html5目录下的所有文件
+
+//关于Web Workers
+	web worker 是运行在后台的 JavaScript，不会影响页面的性能。
+	
+	例如：
+		页面脚本：
+		var w;
+		//开启web workers
+		function startWorker(){
+			if(Worker){
+				if(!w){
+					w = new Worker("文件路径.js");	//创建一个web workers
+				}
+				w.onmessage = function(event){	//监听传来的数据
+					alert(event.data);
+				};
+			}
+			else{
+				alert("您的浏览器不支持Web Workers");
+			}
+		}
+		//终止web workers
+		function stopWorker(){
+			w.terminate();
+		}
+		
+		后台脚本：（文件路径.js）(无法访问页面的Dom元素,bom,window)
+		var i=0;
+
+		function timedCount()
+		{
+			i=i+1;
+			postMessage(i);		//向 HTML 页面传回一段消息。
+			setTimeout("timedCount()",500);
+		}
+
+		timedCount();
+
+//关于服务器发送事件(EventSource)
+	HTML5 服务器发送事件（server-sent event）允许网页获得来自服务器的更新。
+	
