@@ -6,7 +6,6 @@
 这样的做法有个错误，当页面加载过程中，会因为js没有加载完成导致页面渲染失败，我们的做法应该在页面加载完成之后，再去加载js，像下面这样：
 ```html
 <body>
-	
 <script type="text/javascript" src="js/require.min.js" defer async="true" data-main="js/main"></script>
 </body>
 ```
