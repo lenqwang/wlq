@@ -82,14 +82,11 @@
 	var obj = {};
 	obj.prototype.name = 'lenq';
 	obj.prototype.age = 25;
-
 	//跟下面的是一样的吗？
-
 	obj.prototype = {
 		name: 'lenq',
 		age: 25
 	};
-
 ```
 >markdown表格语法
 
