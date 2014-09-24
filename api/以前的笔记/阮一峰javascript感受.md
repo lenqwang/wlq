@@ -83,6 +83,31 @@ switch(1 + 3) {
         neverhappens();
 }
 ```
+
 ####循环语句
+```javascript
+// while语句
+while(expression)
+    statement;
+   
+while(expression) {
+    statement1;
+    statemnet2;
+}
+
+// for语句
+
+for(initialize; test; increment)
+statement
+
+// 或者
+
+for(initialize; test; increment){
+    statement
+}
+```
+>初始化（initialize）：确定循环的初始值，只在循环开始时执行一次;
+>测试（test）：检查循环条件，只要为真就进行后续操作;
+>递增（increment）：完成后续操作，然后返回上一步，再一次检查循环条件。
 
 
