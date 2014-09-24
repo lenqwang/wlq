@@ -642,3 +642,58 @@ for (var key in person) {
 // name
 
 ```
+
+>类似数组的对象
+
+在JavaScript中，有些对象被称为“类似数组的对象”（array-like object）。意思是，它们看上去很像数组，可以使用length属性，但是它们并不是数组，所以无法使用一些数组的方法。
+
+```javascript
+var a = {
+    0:'a',
+    1:'b',
+    2:'c',
+    length:3
+};
+
+a[0] // 'a'
+a[2] // 'c'
+a.length // 3
+
+// 典型的类似数组的对象是函数的arguments对象，以及大多数DOM元素集，还有字符串。
+
+// arguments对象
+function args() { return arguments }
+var arrayLike = args('a', 'b');
+
+arrayLike[0] // 'a'
+arrayLike.length // 2
+arrayLike instanceof Array // false
+
+// DOM元素集
+var elts = document.getElementsByTagName('h3');
+elts.length // 3
+elts instanceof Array // false
+
+// 字符串
+'abc'[1] // 'b'
+'abc'.length // 3
+'abc' instanceof Array // false
+
+// 通过函数的call方法，可以用slice方法将类似数组的对象，变成真正的数组。
+var arr = Array.prototype.slice.call(arguments);
+
+// for循环
+function logArgs() {
+    for (var i=0; i<arguments.length; i++) {
+        console.log(i+'. '+arguments[i]);
+    }
+}
+
+// forEach方法
+function logArgs() {
+    Array.prototype.forEach.call(arguments, function (elem, i) {
+        console.log(i+'. '+elem);
+    });
+}
+
+```
